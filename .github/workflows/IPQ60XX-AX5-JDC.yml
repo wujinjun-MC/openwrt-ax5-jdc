@@ -269,6 +269,7 @@ jobs:
         # GitHub Actions 单个 Job 限制为 360 分钟 (21600秒)
         sudo timedatectl set-timezone "$TZ"
         MAX_RUNTIME=21500
+        export TIMESTAMP_STOP=$(printf "%(%s)T")
         printf "TIMESTAMP_STOP=%(%s)T" >> $GITHUB_ENV
         FLAG_FILE="/tmp/keep-cpolar"
 
