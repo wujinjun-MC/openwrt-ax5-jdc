@@ -233,4 +233,7 @@ jobs:
       run: |
         # 防止编译报错后立即销毁虚拟机，给你留出上去排查日志的时间
         echo "Cpolar is running, waiting for timeout or manual exit..."
-        sleep 600 
+        # sudo timedatectl set-timezone ${{ env.TZ }}
+        printf "TIMESTAMP_AFTER_PACKAGING=%(%s)T" > $GITHUB_ENV
+        ( pgrep cpolar && [ $(( TIMESTAMP_AFTER_PACKAGING - TIMESTAMP_AFTER_COMPILE )) -lt 21500 ] ) || exit 0
+        sleep $(( 21550 - $(( TIMESTAMP_AFTER_PACKAGING - TIMESTAMP_AFTER_COMPILE )) ))
