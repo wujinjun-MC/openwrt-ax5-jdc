@@ -24,7 +24,7 @@ env:
   CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: false
   FIRMWARE_RELEASE: true
-  FIRMWARE_TAG: IPQ60XX-AX5-JDC-6.12
+  # FIRMWARE_TAG: IPQ60XX-AX5-JDC-6.12 # 已改为动态生成
   TZ: Asia/Shanghai
   # --- 注入 Cpolar 所需的环境变量 ---
   MY_SSH_PUB_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
@@ -97,6 +97,13 @@ jobs:
         echo "OPENWRT_PATH=$PWD" >> $GITHUB_ENV
         VERSION_INFO=$(git show -s --date=short --format="作者: %an<br/>时间: %cd<br/>内容: %s<br/>hash: %H")
         echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
+
+    - name: Generate Release Tag (生成日期Tag)
+      run: |
+        # 生成格式为 2024.05.20-1530 的时间戳
+        RELEASE_TAG="IPQ60XX-AX5-JDC-6.12-$(date +%Y.%m.%d-%H%M)"
+        echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+        echo "FIRMWARE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
 
     - name: Generate Variables(生成变量)
       run: |
@@ -213,13 +220,13 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
-          **This is OpenWrt Firmware for ${{ env.FIRMWARE_TAG }}**
+          **This is OpenWrt Firmware for (Redmi-AX5-JDC)**
           ### 📒 固件信息(WIFI)
           - 带WIFI带有线NSS的6.12内核固件
-          - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台使用的 OpenWrt 固件
+          - 💻 这是 (红米AX5-JDC) 平台使用的 OpenWrt 固件
           - ⚽ 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
-          - 🌐 默认地址: 192.168.31.1
+          - 🌐 默认地址: 192.168.4.1
           - 🔑 默认密码: password
           ### 🧊 固件版本
           - 固件内核版本：${{ env.VERSION_KERNEL }}
@@ -247,7 +254,12 @@ jobs:
         MAX_RUNTIME=21500
         START_TIME=${{ env.TIMESTAMP_ON_STARTUP }}
         FLAG_FILE="/tmp/keep-cpolar"
-        
+
+        echo "========================================================="
+        echo "远程调试保持中..."
+        echo "退出方式: 1. SSH输入 'rm $FLAG_FILE' | 2. 终止 cpolar 进程"
+        echo "========================================================="
+
         # 创建标志文件（如果不存在）
         touch "$FLAG_FILE"
         
