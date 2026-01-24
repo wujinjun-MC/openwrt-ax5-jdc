@@ -1,5 +1,15 @@
 <img width="768" src="https://github.com/openwrt/openwrt/blob/main/include/logo.png"/>
 
+## 自用修改版
+
+1. 修改默认管理地址
+2. 修改action步骤，添加远程配置编辑、调试、更多空间释放、可控退出、(远程)自动进入工作目录、一键menuconfig、release防覆盖 (部分灵感来源于[旧项目](https://github.com/wujinjun-MC/build-openwrt))
+3. 添加软件包
+   1. luci-app-quickstart: iStoreOS风格主页和快速配置
+5. 自定义overwrite
+   1. [01-nginx-disable-https](https://github.com/wujinjun-MC/openwrt-ax5-jdc/blob/main/overwrite/01-nginx-disable-https) nginx默认使用http
+   2. 
+
 ## 特别提示 [![](https://img.shields.io/badge/-个人免责声明-FFFFFF.svg)](#特别提示-)
 
 - **本人不对任何人因使用本固件所遭受的任何理论或实际的损失承担责任！**
