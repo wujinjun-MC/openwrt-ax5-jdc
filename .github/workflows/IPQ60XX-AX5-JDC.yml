@@ -237,8 +237,45 @@ jobs:
       shell: bash
       run: |
         # 防止编译报错后立即销毁虚拟机，给你留出上去排查日志的时间
-        echo "Cpolar is running, waiting for timeout or manual exit..."
-        # sudo timedatectl set-timezone ${{ env.TZ }}
-        printf "TIMESTAMP_AFTER_PACKAGING=%(%s)T" > $GITHUB_ENV
-        ( pgrep cpolar && [ $(( TIMESTAMP_AFTER_PACKAGING - TIMESTAMP_AFTER_COMPILE )) -lt 21500 ] ) || exit 0
-        sleep $(( 21550 - $(( TIMESTAMP_AFTER_PACKAGING - TIMESTAMP_AFTER_COMPILE )) ))
+        # echo "Cpolar is running, waiting for timeout or manual exit..."
+        # # sudo timedatectl set-timezone ${{ env.TZ }}
+        # printf "TIMESTAMP_AFTER_PACKAGING=%(%s)T" > $GITHUB_ENV
+        # ( pgrep cpolar && [ $(( TIMESTAMP_AFTER_PACKAGING - TIMESTAMP_AFTER_COMPILE )) -lt 21500 ] ) || exit 0
+        # sleep $(( 21550 - $(( TIMESTAMP_AFTER_PACKAGING - TIMESTAMP_AFTER_COMPILE )) ))
+        # 设置结束时间戳（约 6 小时超时限制）
+        # GitHub Actions 单个 Job 限制为 360 分钟 (21600秒)
+        MAX_RUNTIME=21500
+        START_TIME=${{ env.TIMESTAMP_ON_STARTUP }}
+        FLAG_FILE="/tmp/keep-cpolar"
+        
+        # 创建标志文件（如果不存在）
+        touch "$FLAG_FILE"
+        
+        echo "Cpolar 保持运行中... [监控中]"
+        echo "退出条件: 1. 手动删除 $FLAG_FILE  2. cpolar 进程结束  3. 接近 Action 时间限制"
+        
+        while true; do
+          CURRENT_TIME=$(date +%s)
+          ELAPSED=$(( CURRENT_TIME - START_TIME ))
+          
+          # 检查 1: 标志文件是否被删除
+          if [ ! -f "$FLAG_FILE" ]; then
+            echo "检测到 $FLAG_FILE 已被删除，正在退出..."
+            break
+          fi
+          
+          # 检查 2: cpolar 进程是否存在
+          if ! pgrep cpolar > /dev/null; then
+            echo "检测到 cpolar 进程已退出，正在结束任务..."
+            break
+          fi
+          
+          # 检查 3: 是否接近 6 小时运行上限
+          if [ $ELAPSED -gt $MAX_RUNTIME ]; then
+            echo "已达到最大运行时间，正在自动退出..."
+            break
+          fi
+          
+          # 每 10 秒检测一次，避免占用过多 CPU
+          sleep 10
+        done
