@@ -15,8 +15,8 @@ cpolar authtoken "$MY_REVERSE_PROXY_TOKEN"
 echo "Pleased wait and check tcp tunnel on your dashboard at https://dashboard.cpolar.com/status"
 # echo "Remove /tmp/keep-term to continue"
 cpolar tcp 22 -daemon on -log /tmp/cpolar.log -log-level INFO &# tail -F ~/test.log &
-echo "Write your release notes at /workdir/openwrt/custom_release_notes.txt"
-echo "echo Write your release notes at /workdir/openwrt/custom_release_notes.txt" >> ~/.bash_profile
+echo "$OPENWRT_PATH/custom_release_notes.txt 写你的自定义发布说明"
+echo "echo $OPENWRT_PATH/custom_release_notes.txt 写你的自定义发布说明" >> ~/.bash_profile
 
 # 定义目标源码路径 (根据你提供的容器路径)
 TARGET_PATH="/home/runner/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt"
