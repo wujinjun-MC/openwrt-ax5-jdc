@@ -17,6 +17,9 @@ echo "Pleased wait and check tcp tunnel on your dashboard at https://dashboard.c
 cpolar tcp 22 -daemon on -log /tmp/cpolar.log -log-level INFO &# tail -F ~/test.log &
 echo "Write your release notes at /workdir/openwrt/custom_release_notes.txt"
 echo "echo Write your release notes at /workdir/openwrt/custom_release_notes.txt" >> ~/.bash_profile
+echo "Enter source code directory ~/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt"
+echo "echo Enter source code directory ~/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt" >> ~/.bash_profile
+echo "cd ~/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt" >> ~/.bash_profile
 sleep 10
 if [ "$1"x != "nonblock"x ]
 then
