@@ -9,6 +9,7 @@
 5. 自定义overwrite
    1. [01-nginx-disable-https](https://github.com/wujinjun-MC/openwrt-ax5-jdc/blob/main/overwrite/01-nginx-disable-https) nginx默认使用http
    2. 
+6. 自定义发布信息 (Release notes): 需要远程连接后创建 `custom_release_notes.txt`
 
 ## 特别提示 [![](https://img.shields.io/badge/-个人免责声明-FFFFFF.svg)](#特别提示-)
 
