@@ -17,33 +17,6 @@ echo "Pleased wait and check tcp tunnel on your dashboard at https://dashboard.c
 cpolar tcp 22 -daemon on -log /tmp/cpolar.log -log-level INFO &# tail -F ~/test.log &
 echo "Write your release notes at /workdir/openwrt/custom_release_notes.txt"
 echo "echo Write your release notes at /workdir/openwrt/custom_release_notes.txt" >> ~/.bash_profile
-sleep 10
-if [ "$1"x != "nonblock"x ]
-then
-    if ! [[ -f /tmp/keep-term ]]
-    then
-        export KEEPALIVE_FLAG_FILE=/tmp/keep-term
-    else
-        export KEEPALIVE_FLAG_FILE=$(mktemp)
-    fi
-    touch "$KEEPALIVE_FLAG_FILE"
-    echo "Remove $KEEPALIVE_FLAG_FILE to continue"
-    echo "echo Remove $KEEPALIVE_FLAG_FILE to stop blocking next step"  >> ~/.bash_profile
-    while true
-    do
-        if ! [[ -f "$KEEPALIVE_FLAG_FILE" ]]
-        then
-            echo "Keepalive file removed, continue."
-            break
-        elif ! pgrep cpolar &>/dev/null
-        then
-            echo "Cpolar exited, continue."
-            break
-        fi
-        sleep 10
-    done
-fi
-
 
 # 定义目标源码路径 (根据你提供的容器路径)
 TARGET_PATH="/home/runner/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt"
@@ -76,3 +49,30 @@ enter_menuconfig() {
 # 执行函数
 #enter_menuconfig
 EOF
+
+sleep 10
+if [ "$1"x != "nonblock"x ]
+then
+    if ! [[ -f /tmp/keep-term ]]
+    then
+        export KEEPALIVE_FLAG_FILE=/tmp/keep-term
+    else
+        export KEEPALIVE_FLAG_FILE=$(mktemp)
+    fi
+    touch "$KEEPALIVE_FLAG_FILE"
+    echo "Remove $KEEPALIVE_FLAG_FILE to continue"
+    echo "echo Remove $KEEPALIVE_FLAG_FILE to stop blocking next step"  >> ~/.bash_profile
+    while true
+    do
+        if ! [[ -f "$KEEPALIVE_FLAG_FILE" ]]
+        then
+            echo "Keepalive file removed, continue."
+            break
+        elif ! pgrep cpolar &>/dev/null
+        then
+            echo "Cpolar exited, continue."
+            break
+        fi
+        sleep 10
+    done
+fi
