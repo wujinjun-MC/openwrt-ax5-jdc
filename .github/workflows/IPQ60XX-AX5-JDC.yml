@@ -20,6 +20,10 @@ on:
         options:
           - TOKEN_1
           - TOKEN_2
+      force_single_thread:
+        description: "强制单线程编译并显示详细输出 (V=s)"
+        default: false
+        type: boolean
   schedule:
     - cron: 0 19 * * 5
 
@@ -206,6 +210,13 @@ jobs:
       run: |
         df -h
 
+    - name: Backup Config to Artifact (备份配置到Artifact)
+      uses: actions/upload-artifact@main
+      with:
+        name: config-debug-${{ env.FIRMWARE_TAG }}
+        include-hidden-files: true
+        path: ${{ env.OPENWRT_PATH }}/.config
+
     - name: Compile Firmware (多线程尝试)
       id: compile
       continue-on-error: true # 允许此步失败，以便触发下方的重试逻辑
@@ -219,14 +230,6 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
         echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
-
-    - name: Upload Config on Failure (失败时上传配置)
-      if: steps.compile.outputs.status != 'success'
-      uses: actions/upload-artifact@main
-      with:
-        name: config-debug-${{ env.FIRMWARE_TAG }}
-        include-hidden-files: true
-        path: ${{ env.OPENWRT_PATH }}/.config
 
     - name: Re-compile on Failure (失败后单线程详细模式)
       if: steps.compile.outputs.status != 'success'
@@ -289,6 +292,7 @@ jobs:
           - ⚽ 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
           - 🔗 源码版本: [${{ env.SHORT_COMMIT }}](${{ env.REPO_URL }}/commit/${{ env.COMMIT_HASH }})
+          - 🛠️ 编译模式: ${{ inputs.force_single_thread == 'true' && '强制单线程' || '多线程，失败后单线程' }}
           - 🌐 默认地址: 192.168.4.1
           - 🔑 默认密码: password
           ### 🧊 固件版本
