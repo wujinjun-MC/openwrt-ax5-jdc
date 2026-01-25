@@ -20,8 +20,20 @@ cd $OPENWRT_PATH
 echo -e "$(nproc) thread compile"
 # 记录开始编译时的时间戳
 export TIMESTAMP_START_COMPILE=$(printf "%(%s)T")
-# 第一次尝试：多线程编译
-make -j$(nproc) || make -j1 V=s | tee "$OPENWRT_PATH/build-single-thread.log"
+
+echo >> "$OPENWRT_PATH/build-log.log"
+echo "-------- Start building - $(date +"%Y-%m-%d %H:%M:%S") --------" >> "$OPENWRT_PATH/build-log.log"
+echo >> "$OPENWRT_PATH/build-log.log"
+# 多线程编译 或 单线程编译
+if [ "$force_single_thread"x != ""x ]
+then
+    make -j1 V=s | tee -a "$OPENWRT_PATH/build-log.log"
+else
+    make -j$(nproc) || make -j1 V=s | tee -a "$OPENWRT_PATH/build-log.log"
+fi
+echo >> "$OPENWRT_PATH/build-log.log"
+echo "-------- Stop building - $(date +"%Y-%m-%d %H:%M:%S") --------" >> "$OPENWRT_PATH/build-log.log"
+echo >> "$OPENWRT_PATH/build-log.log"
 
 # 编译结果位于 bin/targets
 ls bin/targets
