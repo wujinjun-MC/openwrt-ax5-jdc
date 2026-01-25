@@ -199,6 +199,7 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: config-debug-${{ env.FIRMWARE_TAG }}
+        include-hidden-files: true
         path: ${{ env.OPENWRT_PATH }}/.config
 
     - name: Re-compile on Failure (失败后单线程详细模式)
