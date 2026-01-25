@@ -4,7 +4,7 @@ set -euo pipefail
 echo "01-prepare-env.sh start"
 
 # { Checkout, Clone Source Code(克隆源代码), Generate Release Tag (生成日期Tag) }
-git clone --depth 1 https://github.com/ing0928/openwrt-ax5-jdc.git builder
+git clone --depth 1 https://github.com/wujinjun-MC/openwrt-ax5-jdc.git builder
 git clone --depth 1 -b "$REPO_BRANCH" "$REPO_URL" builder/openwrt
 cd builder
 export GITHUB_WORKSPACE="$(pwd)"
