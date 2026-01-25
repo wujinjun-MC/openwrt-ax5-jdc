@@ -16,6 +16,7 @@ on:
     - cron: 0 19 * * 5
 
 env:
+  REPO_URL_BUILDER: https://github.com/LiBwrt/openwrt-6.x.git
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
   REPO_BRANCH: main-nss
   CONFIG_FILE: configs/ipq60xx-ax5-jdc-6.12.config
@@ -121,6 +122,11 @@ jobs:
         echo "DEVICE_TARGET=$DEVICE_TARGET" >> $GITHUB_ENV
         DEVICE_SUBTARGET=$(cat .config | grep CONFIG_TARGET_SUBTARGET | awk -F '"' '{print $2}')
         echo "DEVICE_SUBTARGET=$DEVICE_SUBTARGET" >> $GITHUB_ENV
+        # 提取 Commit 信息
+        echo "COMMIT_HASH=$(cd $OPENWRT_PATH && git rev-parse HEAD)" >> $GITHUB_ENV
+        echo "SHORT_COMMIT=$(cd $OPENWRT_PATH && git rev-parse --short HEAD)" >> $GITHUB_ENV
+        echo "COMMIT_HASH_BUILDER=$(cd $GITHUB_WORKSPACE && git rev-parse HEAD)" >> $GITHUB_ENV
+        echo "SHORT_COMMIT_BUILDER=$(cd $GITHUB_WORKSPACE && git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - name: Cache Toolchain(缓存工具链)
       if: env.CACHE_TOOLCHAIN == 'true'
@@ -135,8 +141,8 @@ jobs:
         cd $OPENWRT_PATH
         ./scripts/feeds update -a
         git clone --depth 1 https://github.com/sbwml/openwrt_pkgs.git package/new/custom
-        mv package/new/custom/luci-app-netspeedtest  package/new
-        mv package/new/custom/speedtest-cli package/new
+        mv package/new/custom/luci-app-netspeedtest  package/new || true
+        mv package/new/custom/speedtest-cli package/new || true
         rm -rf package/new/custom
         ./scripts/feeds install -a
 
@@ -226,9 +232,6 @@ jobs:
       run: |
         cd $OPENWRT_PATH/bin/targets/*/*
         cat sha256sums
-        # 提取 Commit 信息
-        echo "COMMIT_HASH=$(cd $OPENWRT_PATH && git rev-parse HEAD)" >> $GITHUB_ENV
-        echo "SHORT_COMMIT=$(cd $OPENWRT_PATH && git rev-parse --short HEAD)" >> $GITHUB_ENV
         
         echo "VERSION_KERNEL=$(find -type f -name "*.manifest" -exec grep -oP '^kernel - \K.*?(?=~|-\d+-)' {} \;)" >> $GITHUB_ENV
         cp $OPENWRT_PATH/.config build.config
@@ -258,6 +261,8 @@ jobs:
         artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
           **This is OpenWrt Firmware for (IPQ60XX-AX5-JDC-6.12-WIFI)**
+          ### Builder信息
+          - 🔗 源码版本: [${{ env.SHORT_COMMIT_BUILDER }}](${{ env.REPO_URL_BUILDER }}/commit/${{ env.COMMIT_HASH_BUILDER }})
           ### 📒 固件信息(WIFI)
           - 带WIFI带有线NSS的6.12内核固件
           - 💻 这是 (IPQ60XX-AX5-JDC-6.12-WIFI) 平台使用的 OpenWrt 固件
