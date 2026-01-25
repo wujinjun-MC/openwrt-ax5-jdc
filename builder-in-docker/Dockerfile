@@ -33,6 +33,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN useradd -m build && echo "build:build" | chpasswd s&& adduser build sudo
 RUN echo 'build ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoer
 
+# 防止权限错误
+RUN chmod -R 777 /home/build
+
 USER build
 WORKDIR /home/build
 

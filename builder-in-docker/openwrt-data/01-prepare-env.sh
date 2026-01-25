@@ -15,6 +15,7 @@ export FIRMWARE_TAG="$RELEASE_TAG"
 # { Generate Variables(生成变量) }
 cd "$GITHUB_WORKSPACE"
 cp "$CONFIG_FILE" "$OPENWRT_PATH/.config"
+cd $OPENWRT_PATH
 make defconfig > /dev/null 2>&1
 export SOURCE_REPO="$(echo $REPO_URL | awk -F '/' '{print $(NF)}')"
 export DEVICE_TARGET=$(cat .config | grep CONFIG_TARGET_BOARD | awk -F '"' '{print $2}')
