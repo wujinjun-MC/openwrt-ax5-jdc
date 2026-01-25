@@ -1,16 +1,35 @@
 <img width="768" src="https://github.com/openwrt/openwrt/blob/main/include/logo.png"/>
 
-## 自用修改版
+## 优化后的OpenWRT编译 for IP60xx-AX5-JDC
 
 1. 修改默认管理地址
-2. 修改action步骤，添加远程配置编辑、调试、更多空间释放、可控退出、(远程)自动进入工作目录、一键menuconfig、release防覆盖 (部分灵感来源于[旧项目](https://github.com/wujinjun-MC/build-openwrt))
-3. 添加软件包
-   1. luci-app-quickstart: iStoreOS风格主页和快速配置
-5. 自定义overwrite
+2. actions过程 (部分灵感来源于[旧项目](https://github.com/wujinjun-MC/build-openwrt))
+   1. 支持远程调试和修改配置 `make menuconfig` (当前支持Cpolar，可设置两个token负载均衡)
+   2. 将更多硬盘空间用于编译
+   3. 直接进入单线程模式，并上传编译日志到artifact，便于排查错误
+   4. 编译开始前上传配置`.config`到artifact
+   5. (远程)自动进入工作目录、一键menuconfig
+   6. release防覆盖
+3. 添加软件包/源
+   1. [nas-packages-luci](https://github.com/linkease/nas-packages-luci): iStoreOS风格主页、快速配置、应用商店、...
+   2. AdGuard Home
+   3. Tailscale (community)
+   4. [small-package](https://github.com/kenzok8/small-package): 更多软件包
+4. 自定义overwrite
    1. [01-nginx-disable-https](https://github.com/wujinjun-MC/openwrt-ax5-jdc/blob/main/overwrite/01-nginx-disable-https) nginx默认使用http
    2. 
-6. 自定义发布信息 (Release notes): 需要远程连接后创建 `custom_release_notes.txt`
+5. release信息:
+   1. 显示编译时所使用的commit (包括源码和本仓库的)
+   2. 自定义发布信息 (Release notes): 需要远程连接后，在源码目录创建 `custom_release_notes.txt`
+6. 解决了部分常见问题
+   1. `ip-full` 和 `ip-tiny` 冲突 - 禁用 `ip-tiny`
+   2. 修复UPnP - 默认打开libupnp
+   3. 
+7. 根据actions过程创建Dockerfile和所需的一键脚本，方便本地编译
 
+## 原README ↓
+
+```markdown
 ## 特别提示 [![](https://img.shields.io/badge/-个人免责声明-FFFFFF.svg)](#特别提示-)
 
 - **本人不对任何人因使用本固件所遭受的任何理论或实际的损失承担责任！**
@@ -46,3 +65,4 @@
 <a href="#readme">
 <img src="https://img.shields.io/badge/-返回顶部-FFFFFF.svg" title="返回顶部" align="right"/>
 </a>
+```

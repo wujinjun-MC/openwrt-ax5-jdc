@@ -43,6 +43,7 @@ env:
   MY_SSH_PUB_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
   CPOLAR_TOKEN_1: ${{ secrets.CPOLAR_TOKEN_1 }}
   CPOLAR_TOKEN_2: ${{ secrets.CPOLAR_TOKEN_2 }}
+  # Workflow dispatch 变量
   CPOLAR: ${{ inputs.debug_or_make_config || 'none' }}
   CPOLAR_TOKEN_TYPE: ${{ inputs.cpolar_token_type || 'TOKEN_1' }}
 
@@ -162,7 +163,7 @@ jobs:
         echo >> feeds.conf.default
         echo 'src-git nas https://github.com/linkease/nas-packages.git;master' >> feeds.conf.default
         echo 'src-git nas_luci https://github.com/linkease/nas-packages-luci.git;main' >> feeds.conf.default
-        
+
         ./scripts/feeds update -a
         git clone --depth 1 https://github.com/sbwml/openwrt_pkgs.git package/new/custom
         mv package/new/custom/luci-app-netspeedtest  package/new || true
