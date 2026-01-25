@@ -149,6 +149,10 @@ jobs:
     - name: Install Feeds(安装feeds)
       run: |
         cd $OPENWRT_PATH
+
+        # 添加small-package https://github.com/kenzok8/small-package
+        sed -i '$a src-git smpackage https://github.com/kenzok8/small-package' feeds.conf.default
+        
         ./scripts/feeds update -a
         git clone --depth 1 https://github.com/sbwml/openwrt_pkgs.git package/new/custom
         mv package/new/custom/luci-app-netspeedtest  package/new || true
