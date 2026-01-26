@@ -19,7 +19,7 @@ export FIRMWARE_TAG="$RELEASE_TAG"
 cd "$GITHUB_WORKSPACE"
 cp "$CONFIG_FILE" "$OPENWRT_PATH/.config"
 cd "$OPENWRT_PATH"
-make defconfig
+#make defconfig
 export SOURCE_REPO="$(echo $REPO_URL | awk -F '/' '{print $(NF)}')"
 export DEVICE_TARGET=$(cat .config | grep CONFIG_TARGET_BOARD | awk -F '"' '{print $2}')
 export DEVICE_SUBTARGET=$(cat .config | grep CONFIG_TARGET_SUBTARGET | awk -F '"' '{print $2}')

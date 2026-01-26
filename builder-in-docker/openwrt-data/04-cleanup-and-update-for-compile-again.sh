@@ -11,7 +11,7 @@ export OPENWRT_PATH="$(pwd)"
 git fetch && git reset --hard origin/main-nss
 cd "$GITHUB_WORKSPACE"
 cp "$CONFIG_FILE" "$OPENWRT_PATH/.config"
-make defconfig > /dev/null 2>&1
+#make defconfig
 
 # { Install Feeds(安装feeds) }
 cd "$OPENWRT_PATH"
