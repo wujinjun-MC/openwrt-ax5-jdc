@@ -8,6 +8,6 @@ export GITHUB_WORKSPACE="$(pwd)"
 cd openwrt
 export OPENWRT_PATH="$(pwd)"
 
-make menuconfig && rm "$OPENWRT_PATH/flags-downloaded-packages"
+make menuconfig && ( rm -f "$OPENWRT_PATH/flags-downloaded-packages" || true )
 
 echo "02-menuconfig.sh success"
