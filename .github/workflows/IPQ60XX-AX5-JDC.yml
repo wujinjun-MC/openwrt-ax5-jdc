@@ -28,7 +28,7 @@ on:
     - cron: 0 19 * * 5
 
 env:
-  REPO_URL_BUILDER: https://github.com/LiBwrt/openwrt-6.x.git
+  REPO_URL_BUILDER: https://github.com/wujinjun-MC/openwrt-ax5-jdc
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
   REPO_BRANCH: main-nss
   CONFIG_FILE: configs/ipq60xx-ax5-jdc-6.12.config

@@ -4,7 +4,7 @@ FROM ubuntu:latest
 # 环境变量设置
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
-ENV REPO_URL_BUILDER=https://github.com/LiBwrt/openwrt-6.x.git
+ENV REPO_URL_BUILDER=https://github.com/wujinjun-MC/openwrt-ax5-jdc
 ENV REPO_URL=https://github.com/LiBwrt/openwrt-6.x.git
 ENV REPO_BRANCH=main-nss
 ENV CONFIG_FILE=configs/ipq60xx-ax5-jdc-6.12.config
