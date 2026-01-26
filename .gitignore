@@ -1,5 +1,6 @@
 .bash_history
 builder-in-docker/openwrt-data/.sudo_as_admin_successful
 builder-in-docker/openwrt-data/builder
+builder-in-docker/openwrt-data/.local
 builder-in-docker/openwrt-data/.config
 .*.swp
