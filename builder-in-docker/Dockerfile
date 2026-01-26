@@ -30,7 +30,7 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN adduser ubuntu sudo
-RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoer
+RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # 创建非 root 用户 (OpenWrt 严禁使用 root 编译)
 USER ubuntu
