@@ -30,6 +30,7 @@ echo >> "$OPENWRT_PATH/build-log.log"
 # 多线程编译 或 单线程编译
 if [[ -v force_single_thread ]]
 then
+    echo "!! Force Single Thread Mode" | tee -a "$OPENWRT_PATH/build-log.log"
     make -j1 V=s | tee -a "$OPENWRT_PATH/build-log.log"
 else
     make -j$(nproc) || make -j1 V=s | tee -a "$OPENWRT_PATH/build-log.log"
