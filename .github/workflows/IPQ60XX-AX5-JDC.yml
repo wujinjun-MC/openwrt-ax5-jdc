@@ -220,7 +220,7 @@ jobs:
 
     - name: Compile Firmware (多线程尝试)
       id: compile
-      if: inputs.force_single_thread == 'false'
+      if: ${{ !inputs.force_single_thread }}
       continue-on-error: true # 允许此步失败，以便触发下方的重试逻辑
       run: |
         cd $OPENWRT_PATH
@@ -245,7 +245,7 @@ jobs:
 
     - name: Compile Firmware Single Thread with Verbosity (单线程详细模式)
       id: compile_j1  
-      if: ${{ steps.compile.outputs.status != 'success' || inputs.force_single_thread }}
+      if: ${{ failure() || inputs.force_single_thread }}
       run: |
         cd $OPENWRT_PATH
 
