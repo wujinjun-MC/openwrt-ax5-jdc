@@ -16,6 +16,7 @@
 
 ```bash
 # In your machine
+chattr -R +C builder-in-docker/openwrt-data
 cd builder-in-docker/
 docker build -t libwrt-builder-ax5_jdc .
 docker run -it --name openwrt-build --network host -v $(pwd)/openwrt-data:/home/ubuntu libwrt-builder-ax5_jdc:latest
