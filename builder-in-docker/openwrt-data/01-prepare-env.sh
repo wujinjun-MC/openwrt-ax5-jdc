@@ -19,7 +19,7 @@ export FIRMWARE_TAG="$RELEASE_TAG"
 cd "$GITHUB_WORKSPACE"
 cp "$CONFIG_FILE" "$OPENWRT_PATH/.config"
 cd "$OPENWRT_PATH"
-#make defconfig
+make defconfig
 export SOURCE_REPO="$(echo $REPO_URL | awk -F '/' '{print $(NF)}')"
 export DEVICE_TARGET=$(cat .config | grep CONFIG_TARGET_BOARD | awk -F '"' '{print $2}')
 export DEVICE_SUBTARGET=$(cat .config | grep CONFIG_TARGET_SUBTARGET | awk -F '"' '{print $2}')
@@ -51,7 +51,7 @@ rm -rf package/new/custom
 # { Load Custom Configuration(加载自定义配置) }
 cd "$GITHUB_WORKSPACE"
 [ -e files ] && mv files "$OPENWRT_PATH/files"
-#[ -e "$CONFIG_FILE" ] && mv "$CONFIG_FILE" "$OPENWRT_PATH/.config"
+[ -e "$CONFIG_FILE" ] && mv "$CONFIG_FILE" "$OPENWRT_PATH/.config"
 chmod +x "$DIY_SCRIPT"
 cd "$OPENWRT_PATH"
 "$GITHUB_WORKSPACE/$DIY_SCRIPT"
