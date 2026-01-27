@@ -38,6 +38,13 @@
    7. [qbittorrent,adblock-fast,adguard](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1138)
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
+### 无法使用
+1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待)
+   1. luci-app-uptimekuma
+   2. luci-app-store, luci-app-quickstart, luci-app-istorex ...
+2. 内核不兼容
+   1. kmod-oaf, luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter
+
 ## 原README ↓
 
 ```markdown
