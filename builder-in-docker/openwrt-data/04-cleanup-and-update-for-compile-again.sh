@@ -3,10 +3,10 @@ set -euo pipefail
 
 echo "04-cleanup-and-update-for-compile-again.sh start"
 
-cd builder
-export GITHUB_WORKSPACE="$(pwd)"
-cd openwrt
-export OPENWRT_PATH="$(pwd)"
+export SHARED_ENV=./.env
+. "$SHARED_ENV"
+
+cd "$OPENWRT_PATH"
 
 git fetch && git reset --hard origin/main-nss
 cd "$GITHUB_WORKSPACE"

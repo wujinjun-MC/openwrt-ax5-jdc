@@ -3,10 +3,10 @@ set -euo pipefail
 
 echo "03-compile.sh start"
 
-cd builder
-export GITHUB_WORKSPACE="$(pwd)"
-cd openwrt
-export OPENWRT_PATH="$(pwd)"
+export SHARED_ENV=./.env
+. "$SHARED_ENV"
+
+cd "$OPENWRT_PATH"
 
 # { Download DL Package(下载DL软件包) }cd "$OPENWRT_PATH"
 make defconfig

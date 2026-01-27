@@ -3,10 +3,10 @@ set -euo pipefail
 
 echo "02-menuconfig.sh start"
 
-cd builder
-export GITHUB_WORKSPACE="$(pwd)"
-cd openwrt
-export OPENWRT_PATH="$(pwd)"
+export SHARED_ENV=./.env
+. "$SHARED_ENV"
+
+cd "$OPENWRT_PATH"
 
 make menuconfig && ( rm -f "$OPENWRT_PATH/flags-downloaded-packages" || true )
 
