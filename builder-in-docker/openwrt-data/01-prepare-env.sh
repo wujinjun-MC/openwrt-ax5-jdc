@@ -3,7 +3,8 @@ set -euo pipefail
 
 echo "01-prepare-env.sh start"
 
-export SHARED_ENV=./.env
+touch ./.env
+export SHARED_ENV=$(realpath ./.env)
 
 # { Checkout, Clone Source Code(克隆源代码), Generate Release Tag (生成日期Tag) }
 [[ -v REPO_URL_BUILDER ]] || export REPO_URL_BUILDER="https://github.com/wujinjun-MC/openwrt-ax5-jdc.git"

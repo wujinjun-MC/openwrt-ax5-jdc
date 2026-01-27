@@ -3,7 +3,8 @@ set -euo pipefail
 
 echo "03-compile.sh start"
 
-export SHARED_ENV=./.env
+touch ./.env
+export SHARED_ENV=$(realpath ./.env)
 . "$SHARED_ENV"
 
 cd "$OPENWRT_PATH"
