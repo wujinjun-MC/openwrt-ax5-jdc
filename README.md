@@ -48,6 +48,8 @@
    2. luci-app-store, luci-app-quickstart, luci-app-istorex ...
 2. 内核不兼容
    1. kmod-oaf, luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter
+3. 源码有bug
+   1. luci-app-cjdns: `AttributeError: module 'collections' has no attribute 'MutableSet'`
 
 ## 原README ↓
 
