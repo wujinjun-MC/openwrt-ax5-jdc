@@ -205,7 +205,7 @@ jobs:
         make defconfig
         make download -j8
         # 检查和构建ccache
-        if ! grep "CONFIG_CCACHE=y" .config
+        if grep "CONFIG_CCACHE=y" .config
         then
           if [ -f ./staging_dir/host/bin/ccache ]
           then
