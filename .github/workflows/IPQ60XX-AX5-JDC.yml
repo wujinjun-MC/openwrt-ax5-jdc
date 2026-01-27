@@ -46,6 +46,7 @@ env:
   # Workflow dispatch 变量
   CPOLAR: ${{ inputs.debug_or_make_config || 'none' }}
   CPOLAR_TOKEN_TYPE: ${{ inputs.cpolar_token_type || 'TOKEN_1' }}
+  FORCE_SINGLE_THREAD: ${{ inputs.force_single_thread || false }}
 
 jobs:
   Build:
@@ -220,7 +221,7 @@ jobs:
 
     - name: Compile Firmware (多线程尝试)
       id: compile
-      if: ${{ !inputs.force_single_thread }}
+      if: ${{ !env.FORCE_SINGLE_THREAD }}
       continue-on-error: true # 允许此步失败，以便触发下方的重试逻辑
       run: |
         cd $OPENWRT_PATH
@@ -245,7 +246,7 @@ jobs:
 
     - name: Compile Firmware Single Thread with Verbosity (单线程详细模式)
       id: compile_j1  
-      if: ${{ failure() || inputs.force_single_thread }}
+      if: ${{ failure() || env.FORCE_SINGLE_THREAD }}
       run: |
         cd $OPENWRT_PATH
 
