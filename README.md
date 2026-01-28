@@ -30,7 +30,7 @@
 
 ### 已测试通过
 
-注: 部分固件必须使用系统更新 `sysupgrade` 刷入，否则重启循环
+注: 部分固件无法直接刷入，会导致重启循环。需要先刷入底包(上游或[pure build](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-0258))，然后使用系统更新 `sysupgrade` 刷入
 
 1. luci类 (省略 `luci-app-` 开头)
    1. [ddnsto,linkease](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1140)
@@ -41,22 +41,27 @@
    6. netdata
    7. [amule,qbittorrent,transmission](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1457)
    8. 顺序开启部分编译项 (20260127 ~ )
-      1. [acl, advanced, alpha-config, argone-config](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1808)
+      1. [acl, advanced, alpha-config, argone-config](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1808) -- argone主题加载失败
       2. [arpbind, autoipsetadder, autoreboot, autorepeater, banip, bcp38, beardropper](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2004)
       3. [control-timewol, control-webrestriction, control-weburl, cpufreq, cpulimit, dcwapd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2201)
+      4. [cifs-mount, cloudflared, cloudflarespeedtest, commands](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2359)
+      5. [ddnsto, diskman(not include btrfs), dnsfilter(必须检查默认的`Base system -> dnsmasq`是否关闭(与`dnsmasq-full`冲突)), dnsmasq-ipset(也是个`dnsmasq-full`), dnsproxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
 ### 无法使用
 1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待)
    1. luci-app-uptimekuma
    2. luci-app-store, luci-app-quickstart, luci-app-istorex ...
-   3. luci-theme-design, 
+   3. luci-theme-design, luci-app-design-config
+   4. luci-app-drawio
 2. 内核不兼容
    1. kmod-oaf, luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter
 3. 源码有bug
    1. luci-app-cjdns: `AttributeError: module 'collections' has no attribute 'MutableSet'`
 4. 冲突
    1. BitTorrent, P2P全开 导致 qbittorrent 安装失败
+5. 看起来编译成功，实际刷入后用不了
+   1. luci-theme-argone (+ luci-app-argone-config): 设置主题后直接出现luci错误，必须进SSH改回原来主题
 
 ## 原README ↓
 
