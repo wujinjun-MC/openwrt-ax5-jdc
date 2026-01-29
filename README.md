@@ -41,21 +41,25 @@
    6. netdata
    7. [amule,qbittorrent,transmission](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1457)
    8. 顺序开启部分编译项 (20260127 ~ )
-      1. [acl, advanced, alpha-config, argone-config](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1808) -- argone主题加载失败
-      2. [arpbind, autoipsetadder, autoreboot, autorepeater, banip, bcp38, beardropper](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2004)
+      1. [acl, advanced, alpha-config, argone-config](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1808) -- 启动成功，argone主题加载失败
+      2. [arpbind, autoipsetadder, autoreboot, autorepeater, banip, bcp38, beardropper](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2004) -- 启动成功，[autorepeater失败](#failed-plugin-luci-app-autorepeater)
       3. [control-timewol, control-webrestriction, control-weburl, cpufreq, cpulimit, dcwapd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2201)
       4. [cifs-mount, cloudflared, cloudflarespeedtest, commands](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2359)
       5. [ddnsto, diskman(not include btrfs), dnsfilter(必须检查默认的`Base system -> dnsmasq`是否关闭(与`dnsmasq-full`冲突)), dnsmasq-ipset(也是个`dnsmasq-full`), dnsproxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-1024)
       6. [eqos, eqosplus, example](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-1034)
       7. [fastnet, fchomo, filemanager, fullconenat](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-1038)
+      8. [internet-detector, iperf3-server, iptvhelper, irqbalance, istoreenhance, istorego](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-1836)
       8.  [kai, ksmbd, ledtrig-rssi, ledtrig-switch](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases) (Docker本地编译，没有Release)
       9.  [lldpd, lxc, mac, mfun](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases) (Docker本地编译，没有Release)
       99. [msd_lite, my-dnshelper](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases) (Docker本地编译，没有Release)
-      99. [nfs, nginx-manager, nlbwmon, npc, nps, frpc, frps](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases) (Docker本地编译，没有Release)
+      99. [natter2, netdata, netspeedtest](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2317)
+      100. [nfs, nginx-manager, nlbwmon, npc, nps, frpc, frps](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases) (Docker本地编译，没有Release)
+      101. [ngrokc, nut, olsr, olsr-services, olsr-viz](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2027)
+      101. [poweroff, poweroffdevice, privoxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2319)
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
 ### 无法使用
-1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待)
+1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待) (如果急需这些软件包，需要在新增actions run时开启 `-` / 本地Docker编译时设置 `=1` ，使用overwrite遍历修复版本号(会导致其他正常软件包的版本号被修改))
    1. luci-app-uptimekuma
    2. luci-app-store (依赖 by luci-app-quickstart, luci-app-istorex ...)
    3. luci-theme-design, luci-app-design-config
@@ -65,23 +69,27 @@
    6. luci-app-homeassistant
    6. luci-app-homeredirect
    6. luci-app-istorepanel
-   6. luci-app-nastools
-   7. vmease (依赖 by luci-app-istoredup)
    8. luci-app-ittools
    9. luci-app-jackett
    10. luci-app-mymind
+   11. luci-app-nastools
+   11. luci-app-openwebui
+   12. vmease (依赖 by luci-app-istoredup)
 2. 内核不兼容
-   1. kmod-oaf, luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter
+   1. kmod-oaf (依赖 by luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter)
 3. 源码有bug
    1. luci-app-cjdns: `AttributeError: module 'collections' has no attribute 'MutableSet'`
 4. 冲突
    1. BitTorrent, P2P全开 导致 qbittorrent 安装失败
 5. 看起来编译成功，实际刷入后用不了
-   1. luci-theme-argone (+ luci-app-argone-config): 设置主题后直接出现luci错误，必须进SSH改回原来主题
+   1. luci-theme-argone (依赖 by luci-app-argone-config): 设置主题后直接出现luci错误，必须进SSH改回原来主题
 6. 迷惑行为
    1. luci-app-mosdns: 自己覆盖自己 `ERROR: luci-app-mosdns-1.6.16-r1: trying to overwrite etc/init.d/mosdns owned by mosdns-5.3.3-r1.`
+   2. luci-app-pppoe-relay: 自己覆盖自己 `ERROR: luci-app-pppoe-relay-26.028.32477~ec83425: trying to overwrite etc/init.d/pppoe-relay owned by rp-pppoe-relay-4.0-r2.`
+   3. luci-app-pppoe-server: 自己覆盖自己 `ERROR: luci-app-pppoe-server-20200326-r8: trying to overwrite etc/init.d/pppoe-server owned by rp-pppoe-server-4.0-r2.`
 7. 缺失依赖
    1. luci-app-gowebdav: 找不到 `gowebdav`
+   2. luci-app-natmap: 找不到 `natmap`
 8. 工具链兼容性(一般发生在停更的软件包)
    1. n2n (依赖 by luci-app-n2n): `Compatibility with CMake < 3.5 has been removed from CMake`
 9. 可能需要更改编译时生成的配置/脚本 (但make过程中不可能实现)
@@ -126,3 +134,48 @@
 <img src="https://img.shields.io/badge/-返回顶部-FFFFFF.svg" title="返回顶部" align="right"/>
 </a>
 ```
+
+## Others
+
+### 安装后无法使用的插件
+
+1. autorepeater <span id="failed-plugin-luci-app-autorepeater"></span>
+
+```
+/usr/lib/lua/luci/ucodebridge.lua:23: /usr/lib/lua/luci/template.lua:181: Failed to execute template 'autorepeater/wifi_overview'.
+A runtime error occurred: /usr/lib/lua/luci/tools/autorepeater.lua:8: module 'luci.model.ipkg' not found:
+no field package.preload['luci.model.ipkg']
+no file './luci/model/ipkg.lua'
+no file '/usr/share/lua/luci/model/ipkg.lua'
+no file '/usr/share/lua/luci/model/ipkg/init.lua'
+no file '/usr/lib/lua/luci/model/ipkg.lua'
+no file '/usr/lib/lua/luci/model/ipkg/init.lua'
+no file './luci/model/ipkg.so'
+no file '/usr/lib/lua/luci/model/ipkg.so'
+no file '/usr/lib/lua/loadall.so'
+no file './luci.so'
+no file '/usr/lib/lua/luci.so'
+no file '/usr/lib/lua/loadall.so'
+stack traceback:
+[C]: in function 'require'
+/usr/lib/lua/luci/tools/autorepeater.lua:8: in main chunk
+[C]: in function 'require'
+[string "/usr/lib/lua/luci/view/autorepeater/wifi_ov..."]:9: in main chunk
+
+In error(), file [C]
+called from function [anonymous function] (/usr/lib/lua/luci/ucodebridge.lua:23)
+called from function ((tail call))
+In [anonymous function](), file /usr/share/ucode/luci/runtime.uc, line 148, byte 45:
+  called from function [arrow function] (/usr/share/ucode/luci/dispatcher.uc:781:71)
+  called from function render ([C])
+  called from function render_action (/usr/share/ucode/luci/dispatcher.uc:768:24)
+  called from function run_action (/usr/share/ucode/luci/dispatcher.uc:782:5)
+  called from function [anonymous function] (/usr/share/ucode/luci/dispatcher.uc:1003:48)
+  called from function run_action (/usr/share/ucode/luci/dispatcher.uc:831:78)
+  called from function [anonymous function] (/usr/share/ucode/luci/dispatcher.uc:1003:48)
+  called from anonymous function (/www/cgi-bin/luci:39:13)
+
+ `        return lcall.call(modname, method, ...args);`
+  Near here ----------------------------------------^
+```
+
