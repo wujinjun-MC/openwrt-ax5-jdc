@@ -196,7 +196,7 @@ jobs:
         $GITHUB_WORKSPACE/overwrite/overwrite-after-feeds-download.sh
 
     # 2. 核心步骤：在编译前进入交互式 menuconfig
-    - name: Remote make menuconfig
+    - name: Remote make menuconfig (远程改配置)
       if: env.CPOLAR == 'mkconf'
       shell: bash
       run: |
@@ -204,16 +204,21 @@ jobs:
         # 你可以在 SSH 终端里执行 cd $OPENWRT_PATH && make menuconfig
         bash ${GITHUB_WORKSPACE}/debug-via-reverse-proxy.sh
 
-    - name: Download DL Package and Build ccache if neede (下载DL软件包并在需要时设置ccache)
+    - name: Download DL Package (下载DL软件包)
       run: |
         cd $OPENWRT_PATH
         make defconfig
         make download -j8
+        #find dl -size -1024c -exec ls -l {} \;
+        #find dl -size -1024c -exec rm -f {} \;
 
+    - name: Build ccache if needed (在需要时设置ccache)
+      run: |
         # 如果设置使用ccache,自动打开
         if [ "$USE_CCACHE"x = "true"x ]; then
           echo "检测到 "'$USE_CCACHE'" = true，正在修改配置以开启ccache"
           sed -i 's/# CONFIG_CCACHE is not set/CONFIG_CCACHE=y/' .config
+          sed -i 's/CONFIG_CCACHE=n/CONFIG_CCACHE=y/' .config
           grep -q "CONFIG_CCACHE=y" .config || echo "CONFIG_CCACHE=y" >> .config
         fi
 
@@ -224,6 +229,7 @@ jobs:
           then
             echo "已打开ccache选项，并且工具链已存在，跳过工具链构建"
             mkdir -p "$OPENWRT_PATH/.ccache"
+            echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
           else
             echo "已打开ccache选项，但ccache工具链需要构建到指定目录。正在构建..."
             if make tools/ccache/compile -j$(nproc)
@@ -231,15 +237,17 @@ jobs:
               echo "ccache 构建成功，本次编译将支持ccache"
               make tools/install
               mkdir -p "$OPENWRT_PATH/.ccache"
+              echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
             else
               echo "ccache 构建失败，正在关闭ccache"
               sed -i 's/^CONFIG_CCACHE=y/# CONFIG_CCACHE is not set/' .config
               make defconfig
+              echo "ENABLED_CCACHE=false" >> $GITHUB_ENV
             fi
           fi
+        else
+          echo "ENABLED_CCACHE=false" >> $GITHUB_ENV
         fi
-        #find dl -size -1024c -exec ls -l {} \;
-        #find dl -size -1024c -exec rm -f {} \;
 
     - name: Print disk usage 3
       if: always()
@@ -254,13 +262,14 @@ jobs:
         path: ${{ env.OPENWRT_PATH }}/.config
 
     # --- 缓存 ccache (分层) ---
-    - name: Cache ccache
+    - name: Cache ccache (调取ccache缓存)
       if: env.USE_CCACHE == 'true'
       uses: actions/cache@v4
       with:
         path: ${{ env.OPENWRT_PATH }}/.ccache
         # 关键：hashFiles 确保了配置一旦修改，就会寻找新的缓存或重新建立缓存
-        key: ${{ runner.os }}-openwrt-ccache-${{ hashFiles('openwrt/.config') }}
+        #key: ${{ runner.os }}-openwrt-ccache-${{ hashFiles('openwrt/.config') }}
+        key: ${{ runner.os }}-openwrt-ccache-default
         restore-keys: |
           ${{ runner.os }}-openwrt-ccache-
 
@@ -366,8 +375,9 @@ jobs:
           ### Builder信息
           - 🔗 源码版本: [${{ env.SHORT_COMMIT_BUILDER }}](${{ env.REPO_URL_BUILDER }}/commit/${{ env.COMMIT_HASH_BUILDER }})
           - 🚀 本次运行 Workflow: [#${{ github.run_number }} (${{ github.run_id }})](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          - 🛠️ workflow 定义文件: [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/${{ github.workflow }}.yml)
+          - 🛠️ workflow 定义文件: [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/IPQ60XX-AX5-JDC.yml)
           - ⚙️ 编译模式: ${{ env.FORCE_SINGLE_THREAD == 'true' && '强制单线程' || '自动多线程' }}
+          - ⚙️ 编译缓存: ${{ env.ENABLED_CCACHE == 'true' && '已启用' || '已禁用' }}
           ### 📒 固件信息(WIFI)
           - 带WIFI带有线NSS的6.12内核固件
           - 💻 这是 (IPQ60XX-AX5-JDC-6.12-WIFI) 平台使用的 OpenWrt 固件
