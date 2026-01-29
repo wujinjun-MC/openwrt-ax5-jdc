@@ -21,20 +21,36 @@ fi
 
 # 检查和构建ccache
 if grep "CONFIG_CCACHE=y" .config; then
-    # 检查ccache二进制文件是否存在
-    if [ -f "$OPENWRT_PATH/staging_dir/host/bin/ccache" ]; then
-        echo "已打开ccache选项，并且二进制已存在，跳过二进制构建"
+    ccache_path=./staging_dir/host/bin/ccache
+    if [ -e "$ccache_path" ]; then
+        echo "已打开ccache选项，并且工具链已存在，跳过工具链构建"
+        mkdir -p "$OPENWRT_PATH/.ccache"
+        echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
     else
-        echo "已打开ccache选项，但ccache二进制需要构建到指定目录。正在构建..."
-        if make tools/ccache/compile -j$(nproc); then
-            echo "ccache 构建成功，本次编译将支持ccache"
-            make tools/install
+        echo "已打开ccache选项，但ccache二进制文件没有放入 $ccache_path "
+        ccache_path_system=$(which ccache)
+        if [ $? -eq 0 ]; then
+            echo "系统已安装ccache，正在创建符号链接 \"$ccache_path_system\" -> \"$ccache_path\""
+            ln -s "$ccache_path_system" "$ccache_path"
+            echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
         else
-            echo "ccache 构建失败，正在关闭ccache"
-            sed -i 's/^CONFIG_CCACHE=y/# CONFIG_CCACHE is not set/' .config
-            make defconfig
+            echo "系统未安装ccache，开始构建"
+            if make tools/ccache/compile -j$(nproc); then
+                echo "ccache 构建成功，本次编译将支持ccache"
+                make tools/install
+                mkdir -p "$OPENWRT_PATH/.ccache"
+                echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
+            else
+                echo "ccache 构建失败，正在关闭ccache"
+                sed -i 's/^CONFIG_CCACHE=y/# CONFIG_CCACHE is not set/' .config
+                make defconfig
+                echo "ENABLED_CCACHE=false" >> $GITHUB_ENV
+            fi
         fi
     fi
+else
+    echo "ENABLED_CCACHE=false" >> $GITHUB_ENV
+fi
     
     # 提高ccache缓存大小以提高命中率 (可选)
     if ! [[ -v ccache_keep_default_cache_size ]]; then
