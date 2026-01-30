@@ -64,6 +64,7 @@
       17.  [spotifyd, squid, sshtunnel, ssr-mudb-server, ssr-plus (defaults)](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0256)
       18.  [openclash, openthread, openvpn, openvpn-client, openwisp](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases) (Docker本地编译，没有Release) (factory=39M, sysupgrade=39M)
       19.  [oscam, ota, p910nd, packet-capture, pagekitec, partexp, passwall (defaults), pbr](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases) (Docker本地编译，没有Release) (factory=46M, sysupgrade=45M)
+      19.  [tailscale-community, taskplan, tcpdump, timecontrol, timewol, tinyfilemanager](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases) (Docker本地编译，没有Release) (factory=44M, sysupgrade=43M)
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
 ### 无法使用
@@ -88,7 +89,8 @@
    18. luci-app-shortcutmenu
    18. luci-app-sunpanel
    20. luci-app-typecho
-   21. vmease (依赖 by luci-app-istoredup)
+   21. luci-app-wan-mac (未测试)
+   22. vmease (依赖 by luci-app-istoredup)
 2. 内核不兼容
    1. kmod-oaf (依赖 by luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter)
 3. 源码有bug
