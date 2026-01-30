@@ -102,6 +102,10 @@
       19.  [tailscale-community, taskplan, tcpdump, timecontrol, timewol, tinyfilemanager](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=44 M, sysupgrade=43 M
+      20.  [tinyproxy, tor, travelmate, transmission, ua2f, udp2raw, udpxy, unblockmusic](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+         - unblockmusic: 需要选择 `UnblockNeteaseMusic Golang Version`
+         - Docker本地编译，没有Release
+         - factory=36 M, sysupgrade=36 M
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
 ### 无法使用
@@ -127,8 +131,10 @@
    19. luci-app-sunpanel
    20. luci-app-systools
    21. luci-app-typecho
-   22. luci-app-wan-mac (未测试)
-   23. vmease (依赖 by luci-app-istoredup)
+   22. luci-app-unifi
+   23. luci-app-unishare (未测试)
+   24. luci-app-wan-mac (未测试)
+   25. vmease (依赖 by luci-app-istoredup)
 2. 内核不兼容
    1. kmod-oaf (依赖 by luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter)
 3. 源码有bug
@@ -145,6 +151,7 @@
 7. 缺失依赖
    1. luci-app-gowebdav: 找不到 `gowebdav`
    2. luci-app-natmap: 找不到 `natmap`
+   3. luci-app-webd: 找不到 `webd`
 8. 工具链兼容性 (一般发生在停更的软件包)
    1. n2n (依赖 by luci-app-n2n): `Compatibility with CMake < 3.5 has been removed from CMake`
    2. scutclient (依赖 by luci-app-scutclient): `Compatibility with CMake < 3.5 has been removed from CMake`
