@@ -65,47 +65,60 @@
          - factory=29.9 MB, sysupgrade=29.4 MB
       7. [fastnet, fchomo, filemanager, fullconenat](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-1038)
          - factory=45.6 MB, sysupgrade=45.1 MB
-      7. [fwknopd, gost, guest-wifi, hd-idle](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-0253)
+      8. [fwknopd, gost, guest-wifi, hd-idle](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-0253)
          - factory=38.6 MB, sysupgrade=38.2 MB
-      7. [https-dns-proxy, ikoolproxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-2316)
+      9. [https-dns-proxy, ikoolproxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-2316)
          - factory=30.8 MB, sysupgrade=30.4 MB
-      8. [internet-detector, iperf3-server, iptvhelper, irqbalance, istoreenhance, istorego](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-1836)
+      10. [internet-detector, iperf3-server, iptvhelper, irqbalance, istoreenhance, istorego](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-1836)
          - factory=84 MB, sysupgrade=83.5 MB
-      8.  [kai, ksmbd, ledtrig-rssi, ledtrig-switch](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      11.  [kai, ksmbd, ledtrig-rssi, ledtrig-switch](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
-      9.  [lldpd, lxc, mac, mfun](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      12.  [lldpd, lxc, mac, mfun](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
-      11. [microsocks， minidlna, mjpg-streamer, mosquitto](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-2305)
+      13. [microsocks， minidlna, mjpg-streamer, mosquitto](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-2305)
          - factory=31.4 MB, sysupgrade=30.8 MB
-      10. [msd_lite, my-dnshelper](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      14. [msd_lite, my-dnshelper](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
-      11. [natter2, netdata, netspeedtest](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2317)
+      15. [natter2, netdata, netspeedtest](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2317)
          - factory=44.6 MB, sysupgrade=44 MB
-      12.  [nfs, nginx-manager, nlbwmon, npc, nps, frpc, frps](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      16.  [nfs, nginx-manager, nlbwmon, npc, nps, frpc, frps](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
-      13.  [ngrokc, nut, olsr, olsr-services, olsr-viz](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2027)
+      17.  [ngrokc, nut, olsr, olsr-services, olsr-viz](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2027)
          - factory=30.6 MB, sysupgrade=30.1 MB
-      14.  [poweroff, poweroffdevice, privoxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2319)
+      18.  [poweroff, poweroffdevice, privoxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2319)
          - factory=29.8 MB, sysupgrade=29.3 MB
-      15.  [pushbot, qbittorrent, qos, ramfree](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2337)
+      19.  [pushbot, qbittorrent, qos, ramfree](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2337)
          - factory=43.3 MB, sysupgrade=42.9 MB
-      16.  [rclone, rp-pppoe-server](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0915)
+      20.  [rclone, rp-pppoe-server](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0915)
          - factory=53.3 MB, sysupgrade=52.8 MB
-      17.  [spotifyd, squid, sshtunnel, ssr-mudb-server, ssr-plus (defaults)](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0256)
-         - factory: 58.9 MB, sysupgrade=58.4 MB
-      18.  [openclash, openthread, openvpn, openvpn-client, openwisp](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      21.  [rustdesk-server, ser2net](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0915)
+         - factory=33.1 MB, sysupgrade=32.6 MB
+      22.  [spotifyd, squid, sshtunnel, ssr-mudb-server, ssr-plus (defaults)](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0256)
+         - factory=58.9 MB, sysupgrade=58.4 MB
+      23.  [openclash, openthread, openvpn, openvpn-client, openwisp](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=39 M, sysupgrade=39 M
-      19.  [oscam, ota, p910nd, packet-capture, pagekitec, partexp, passwall (defaults), pbr](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      24.  [oscam, ota, p910nd, packet-capture, pagekitec, partexp, passwall (defaults), pbr](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=46 M, sysupgrade=45 M
-      19.  [tailscale-community, taskplan, tcpdump, timecontrol, timewol, tinyfilemanager](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      25.  [shutdown, smartdns, socat, softether, softethervpn](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-2107)
+         - smartdns: 不能勾选WebUI，否则等着超时吧 (Node.JS怪谈)
+         - factory=34.3 M, sysupgrade=33.8 M
+      26.  [tailscale-community, taskplan, tcpdump, timecontrol, timewol, tinyfilemanager](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=44 M, sysupgrade=43 M
-      20.  [tinyproxy, tor, travelmate, transmission, ua2f, udp2raw, udpxy, unblockmusic](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      27.  [tinyproxy, tor, travelmate, transmission, ua2f, udp2raw, udpxy, unblockmusic](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - unblockmusic: 需要选择 `UnblockNeteaseMusic Golang Version`
          - Docker本地编译，没有Release
          - factory=36 M, sysupgrade=36 M
+      28.  [unbound](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-1734)
+         - factory=30.2 MB, sysupgrade=29.7 MB
+      29.  [usteer, v2raya, vlmcsd, vnstat2, vsftpd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-1514)
+         - factory=47 MB, sysupgrade=46.5 MB
+      30.  [watchcat, watchdog, webd, webdav, webviewdev](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+         - webd: 取消勾选 `Include webd Binary`
+         - Docker本地编译，没有Release
+         - factory=32 M, sysupgrade=31 M
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
 ### 无法使用
@@ -148,10 +161,11 @@
    2. luci-app-pppoe-relay: 自己覆盖自己 `ERROR: luci-app-pppoe-relay-26.028.32477~ec83425: trying to overwrite etc/init.d/pppoe-relay owned by rp-pppoe-relay-4.0-r2.`
    3. luci-app-pppoe-server: 自己覆盖自己 `ERROR: luci-app-pppoe-server-20200326-r8: trying to overwrite etc/init.d/pppoe-server owned by rp-pppoe-server-4.0-r2.`
    4. luci-app-openvpn-server: 自己覆盖自己 `ERROR: luci-app-openvpn-server-3.0-r0: trying to overwrite etc/config/openvpn owned by openvpn-openssl-2.6.14-r4.`
+   5. luci-app-wifidog: 自己覆盖自己 `ERROR: luci-app-wifidog-2.0-r2: trying to overwrite etc/init.d/wifidog owned by wifidog-1.3.0-r9.`
 7. 缺失依赖
    1. luci-app-gowebdav: 找不到 `gowebdav`
    2. luci-app-natmap: 找不到 `natmap`
-   3. luci-app-webd: 找不到 `webd`
+   3. ~~luci-app-webd: 找不到 `webd`~~ (不勾选 `Include webd Binary` 即可)
 8. 工具链兼容性 (一般发生在停更的软件包)
    1. n2n (依赖 by luci-app-n2n): `Compatibility with CMake < 3.5 has been removed from CMake`
    2. scutclient (依赖 by luci-app-scutclient): `Compatibility with CMake < 3.5 has been removed from CMake`
@@ -172,7 +186,8 @@
       2. luci-app-ubuntu
       3. luci-app-ubuntu2
       99999. ...
-
+12. 文件错误
+   1. speedtest-web (依赖 by ): `speedtest-web-1.1.5.tar.zst: Wrong hash (probably caused by .gitattributes), expecting 63dad14ce21c78b37f223aacc4fd4611bbe1f9619afff8d52a38186441cb6a86, got aff79406f9050e7ccc04af51458e00e49a90821dd50fb4cc2ab5d7fa7a66f3db`
 
 ## 原README ↓
 
