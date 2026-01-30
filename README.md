@@ -81,6 +81,7 @@
    11. luci-app-nastools
    11. luci-app-openwebui
    10. luci-app-owntone
+   11. luci-app-penpot
    11. luci-app-rtbwmon
    12. vmease (依赖 by luci-app-istoredup)
 2. 内核不兼容
@@ -107,6 +108,9 @@
 10. 导致编译时间过长 / Github Actions 超时
    1. 需要Node.js
       1. luci-app-snmpd
+11. 体积太大，可能无法刷入
+   1. Docker。除了本身，需要docker的软件包如下 (部分)
+      1. luci-app-penpot
 
 
 ## 原README ↓
