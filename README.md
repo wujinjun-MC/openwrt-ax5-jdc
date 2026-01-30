@@ -60,7 +60,7 @@
       101. [ngrokc, nut, olsr, olsr-services, olsr-viz](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2027)
       101. [poweroff, poweroffdevice, privoxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2319)
       101. [pushbot, qbittorrent, qos, ramfree](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2337)
-      102. [luci: spotifyd, squid, sshtunnel, ssr-mudb-server, ssr-plus (defaults)](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0256)
+      102. [spotifyd, squid, sshtunnel, ssr-mudb-server, ssr-plus (defaults)](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0256)
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
 ### 无法使用
@@ -79,6 +79,7 @@
    10. luci-app-mymind
    11. luci-app-nastools
    11. luci-app-openwebui
+   10. luci-app-owntone
    11. luci-app-rtbwmon
    12. vmease (依赖 by luci-app-istoredup)
 2. 内核不兼容
@@ -102,6 +103,10 @@
    1. scutclient (依赖 by luci-app-scutclient): `Compatibility with CMake < 3.5 has been removed from CMake`
 9. 可能需要更改编译时生成的配置/脚本 (但make过程中不可能实现)
    1. luci-app-nginx-pingos: `./configure: error: the HTTP rewrite module requires the PCRE library. You can either disable the module by using --without-http_rewrite_module option, or install the PCRE library into the system, or build the PCRE library statically from the source with nginx by using --with-pcre=<path> option.`
+10. 导致编译时间过长 / Github Actions 超时
+   1. 需要Node.js
+      1. luci-app-snmpd
+
 
 ## 原README ↓
 
