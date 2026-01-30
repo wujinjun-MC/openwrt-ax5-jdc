@@ -269,10 +269,11 @@ jobs:
         include-hidden-files: true
         path: ${{ env.OPENWRT_PATH }}/.config
 
-    # --- 缓存 ccache (分层) ---
-    - name: Cache ccache (调取ccache缓存)
-      if: env.USE_CCACHE == 'true'
-      uses: actions/cache@v4
+    # --- 恢复 ccache (分层) ---
+    - name: Restore ccache (恢复ccache缓存)
+      id: ccache-restore
+      if: always() && env.USE_CCACHE == 'true'
+      uses: actions/cache/restore@v5
       with:
         path: ${{ env.OPENWRT_PATH }}/.ccache
         # 关键：hashFiles 确保了配置一旦修改，就会寻找新的缓存或重新建立缓存
@@ -410,6 +411,19 @@ jobs:
       if: always()
       run: |
         df -h
+
+    # --- 回写 ccache (分层) ---
+    - name: Save ccache (写入ccache缓存)
+      id: ccache-save
+      if: always() && env.USE_CCACHE == 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: ${{ env.OPENWRT_PATH }}/.ccache
+        # 关键：hashFiles 确保了配置一旦修改，就会寻找新的缓存或重新建立缓存
+        #key: ${{ runner.os }}-openwrt-ccache-${{ hashFiles('openwrt/.config') }}
+        key: ${{ runner.os }}-openwrt-ccache-default
+        restore-keys: |
+          ${{ runner.os }}-openwrt-ccache-
 
     # 3. 编译完成后，如果是 debug 模式，等待一段时间避免立即关机
     - name: Wait for Remote Debug Exit
