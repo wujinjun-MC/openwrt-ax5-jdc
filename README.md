@@ -103,7 +103,7 @@
          - factory=46 M, sysupgrade=45 M
       25.  [shutdown, smartdns, socat, softether, softethervpn](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-2107)
          - smartdns: 不能勾选WebUI，否则等着超时吧 (Node.JS怪谈)
-         - factory=34.3 M, sysupgrade=33.8 M
+         - factory=34.3 MB, sysupgrade=33.8 MB
       26.  [tailscale-community, taskplan, tcpdump, timecontrol, timewol, tinyfilemanager](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=44 M, sysupgrade=43 M
@@ -119,6 +119,19 @@
          - webd: 取消勾选 `Include webd Binary`
          - Docker本地编译，没有Release
          - factory=32 M, sysupgrade=31 M
+      31.  [wechatpush, wifischedule, wizard, wol, wolplus](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+         - wechatpush: 勾选全部附加项
+         - Docker本地编译，没有Release
+         - factory=32 M, sysupgrade=32 M
+      31.  [wrtbwmon, xfrpc, xinetd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.31-0221)
+         - factory=29.9 MB, sysupgrade=29.4 MB
+      31.  [luci-app-zerotier, luci-themedog](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+         - 不省略 `luci-app-` 开头，因为不以 `luci-app-` 开头
+         - Docker本地编译，没有Release
+         - factory=31 M, sysupgrade=30 M
+      31.  [chatgpt-web, clamav, ddns-go](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+         - Docker本地编译，没有Release
+         - factory=38 M, sysupgrade=38 M
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
 ### 无法使用
@@ -147,7 +160,9 @@
    22. luci-app-unifi
    23. luci-app-unishare (未测试)
    24. luci-app-wan-mac (未测试)
-   25. vmease (依赖 by luci-app-istoredup)
+   25. luci-app-xteve
+   26. speedtestcli (依赖 by luci-app-systools)
+   27. vmease (依赖 by luci-app-istoredup)
 2. 内核不兼容
    1. kmod-oaf (依赖 by luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter)
 3. 源码有bug
@@ -185,6 +200,7 @@
       1. luci-app-penpot
       2. luci-app-ubuntu
       3. luci-app-ubuntu2
+      4. luci-app-wxedge
       99999. ...
 12. 文件错误
    1. speedtest-web (依赖 by ): `speedtest-web-1.1.5.tar.zst: Wrong hash (probably caused by .gitattributes), expecting 63dad14ce21c78b37f223aacc4fd4611bbe1f9619afff8d52a38186441cb6a86, got aff79406f9050e7ccc04af51458e00e49a90821dd50fb4cc2ab5d7fa7a66f3db`
