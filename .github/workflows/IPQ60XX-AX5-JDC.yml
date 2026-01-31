@@ -195,6 +195,12 @@ jobs:
         chmod +x $GITHUB_WORKSPACE/overwrite/overwrite-after-feeds-download.sh
         $GITHUB_WORKSPACE/overwrite/overwrite-after-feeds-download.sh
 
+    - name: Place bash history (注入bash命令历史记录)
+      if: ${{ env.CPOLAR != 'debug' }}
+      shell: bash
+      run: |
+        cp "$GITHUB_WORKSPACE/bash_history" ~/.bash_history
+
     # 2. 核心步骤：在编译前进入交互式 menuconfig
     - name: Remote make menuconfig (远程改配置)
       if: env.CPOLAR == 'mkconf'
@@ -203,12 +209,6 @@ jobs:
         # 此时 cpolar 会启动并进入阻塞状态，直到你手动删除 /tmp/keep-term
         # 你可以在 SSH 终端里执行 cd $OPENWRT_PATH && make menuconfig
         bash ${GITHUB_WORKSPACE}/debug-via-reverse-proxy.sh
-
-    - name: Place bash history (注入bash命令历史记录)
-      if: ${{ env.CPOLAR != 'debug' }}
-      shell: bash
-      run: |
-        cp "$GITHUB_WORKSPACE/bash_history" ~/.bash_history
 
     - name: Download DL Package (下载DL软件包)
       run: |
@@ -428,8 +428,6 @@ jobs:
         # 关键：hashFiles 确保了配置一旦修改，就会寻找新的缓存或重新建立缓存
         #key: ${{ runner.os }}-openwrt-ccache-${{ hashFiles('openwrt/.config') }}
         key: ${{ runner.os }}-openwrt-ccache-default
-        restore-keys: |
-          ${{ runner.os }}-openwrt-ccache-
 
     # 3. 编译完成后，如果是 debug 模式，等待一段时间避免立即关机
     - name: Wait for Remote Debug Exit
