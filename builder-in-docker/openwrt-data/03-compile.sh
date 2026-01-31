@@ -73,7 +73,6 @@ fi
 
 # { Compile Firmware (多线程尝试), Compile Firmware Single Thread with Verbosity (单线程详细模式) }
 cd "$OPENWRT_PATH"
-echo -e "$(nproc) thread compile"
 # 记录开始编译时的时间戳
 export TIMESTAMP_START_COMPILE=$(printf "%(%s)T")
 
