@@ -257,7 +257,7 @@ jobs:
               echo "系统未安装ccache，开始构建"
               if make tools/ccache/compile -j$(nproc); then
                 echo "ccache 构建成功，本次编译将支持ccache"
-                make tools/install
+                #make tools/install
                 mkdir -p "$OPENWRT_PATH/.ccache"
                 echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
               else
@@ -304,7 +304,7 @@ jobs:
       run: |
         set -o pipefail
         cd $OPENWRT_PATH
-        echo -e "$(( $(nproc) * 2 )) thread compile"
+        echo -e "$(( $(nproc) + 1 )) thread compile"
         # 记录开始编译时的时间戳
         printf "TIMESTAMP_START_COMPILE=%(%s)T" > $GITHUB_ENV
 
@@ -313,7 +313,7 @@ jobs:
         echo >> "$OPENWRT_PATH/build-log.log"
 
         # 第一次尝试：多线程编译
-        make -j$(( $(nproc) * 2 )) V=s 2>&1 | tee -a "$OPENWRT_PATH/build-log.log"
+        make -j$(( $(nproc) + 1 )) V=s 2>&1 | tee -a "$OPENWRT_PATH/build-log.log"
 
         echo >> "$OPENWRT_PATH/build-log.log"
         echo "-------- Stop building - $(date +"%Y-%m-%d %H:%M:%S") --------" >> "$OPENWRT_PATH/build-log.log"
