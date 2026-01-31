@@ -45,4 +45,8 @@ cd "$OPENWRT_PATH"
 chmod +x "$GITHUB_WORKSPACE/overwrite/overwrite-after-feeds-download.sh"
 "$GITHUB_WORKSPACE/overwrite/overwrite-after-feeds-download.sh"
 
+# { Load Custom Patch(加载自定义修补) }
+chmod +x $GITHUB_WORKSPACE/patch/patch-after-feeds-download.sh
+$GITHUB_WORKSPACE/patch/patch-after-feeds-download.sh
+
 echo "04-cleanup-and-update-for-compile-again.sh success"
