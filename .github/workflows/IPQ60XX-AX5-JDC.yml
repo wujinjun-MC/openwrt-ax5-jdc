@@ -249,8 +249,7 @@ jobs:
             echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
           else
             echo "已打开ccache选项，但ccache二进制文件没有放入 $ccache_path "
-            ccache_path_system=$(which ccache)
-            if [ $? -eq 0 ]; then
+            if ccache_path_system=$(which ccache); then
               echo "系统已安装ccache，正在创建符号链接 \"$ccache_path_system\" -> \"$ccache_path\""
               ln -s "$ccache_path_system" "$ccache_path"
               echo "ENABLED_CCACHE=true" >> $GITHUB_ENV

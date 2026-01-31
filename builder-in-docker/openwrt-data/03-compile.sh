@@ -25,31 +25,34 @@ if grep "CONFIG_CCACHE=y" .config; then
     if [ -e "$ccache_path" ]; then
         echo "已打开ccache选项，并且工具链已存在，跳过工具链构建"
         mkdir -p "$OPENWRT_PATH/.ccache"
-        echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
+        export ENABLED_CCACHE=true
+        echo "export ENABLED_CCACHE=true" >> "$SHARED_ENV"
     else
         echo "已打开ccache选项，但ccache二进制文件没有放入 $ccache_path "
-        ccache_path_system=$(which ccache)
-        if [ $? -eq 0 ]; then
+        if ccache_path_system=$(which ccache); then
             echo "系统已安装ccache，正在创建符号链接 \"$ccache_path_system\" -> \"$ccache_path\""
             ln -s "$ccache_path_system" "$ccache_path"
-            echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
+            export ENABLED_CCACHE=true
+            echo "export ENABLED_CCACHE=true" >> "$SHARED_ENV"
         else
             echo "系统未安装ccache，开始构建"
             if make tools/ccache/compile -j$(nproc); then
                 echo "ccache 构建成功，本次编译将支持ccache"
                 make tools/install
                 mkdir -p "$OPENWRT_PATH/.ccache"
-                echo "ENABLED_CCACHE=true" >> $GITHUB_ENV
+                export ENABLED_CCACHE=true
+                echo "export ENABLED_CCACHE=true" >> "$SHARED_ENV"
             else
                 echo "ccache 构建失败，正在关闭ccache"
                 sed -i 's/^CONFIG_CCACHE=y/# CONFIG_CCACHE is not set/' .config
                 make defconfig
-                echo "ENABLED_CCACHE=false" >> $GITHUB_ENV
+                export ENABLED_CCACHE=false
+                echo "export ENABLED_CCACHE=false" >> "$SHARED_ENV"
             fi
         fi
     fi
 else
-    echo "ENABLED_CCACHE=false" >> $GITHUB_ENV
+    echo "export ENABLED_CCACHE=false" >> "$SHARED_ENV"
 fi
     
 # 提高ccache缓存大小以提高命中率 (可选)
