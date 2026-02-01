@@ -35,7 +35,7 @@
 
 注: 部分固件无法直接刷入，会导致重启循环。需要先刷入底包(上游或~~[pure build](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-0258)~~ (也无法启动))，然后使用系统更新 `sysupgrade` 刷入
 
-1. luci类 (省略 `luci-app-` 开头)
+1. luci应用类 (省略 `luci-app-` 开头)
    1. [ddnsto,linkease](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1140)
    2. [amule,upnp](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1139)
    3. [qbittorrent,adblock-fast,adguard](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1138)
@@ -43,7 +43,7 @@
    5. [adblock-fast,adguard](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-0832)
    6. netdata
    7. [amule,qbittorrent,transmission](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1457)
-   8. 顺序开启部分编译项 (20260127 ~ )
+   8. 顺序开启部分编译项 (20260127 ~ 20260201)
       1. [acl, advanced, alpha-config, argone-config](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-1808)
          - 启动成功
          - argone主题加载失败
@@ -112,6 +112,7 @@
          - Docker本地编译，没有Release
          - factory=36 M, sysupgrade=36 M
       28.  [unbound](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-1734)
+         - 启动成功，可进入软件界面
          - factory=30.2 MB, sysupgrade=29.7 MB
       29.  [usteer, v2raya, vlmcsd, vnstat2, vsftpd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-1514)
          - factory=47 MB, sysupgrade=46.5 MB
@@ -124,6 +125,7 @@
          - Docker本地编译，没有Release
          - factory=32 M, sysupgrade=32 M
       32.  [wrtbwmon, xfrpc, xinetd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.31-0221)
+         - 启动成功，可进入软件界面
          - factory=29.9 MB, sysupgrade=29.4 MB
       33.  [luci-app-zerotier, luci-themedog](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - 不省略 `luci-app-` 开头，因为不以 `luci-app-` 开头
@@ -132,9 +134,19 @@
       34.  [chatgpt-web, clamav, ddns-go](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=38 M, sysupgrade=38 M
-      35.  [supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      35.  [supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-0124)
+         - 为什么显示 `Supervisord 未运行`
+            - 来自 [项目说明](https://github.com/sundaqiang/openwrt-packages/tree/master/luci-app-nginx-manager):
+               - > 插件没附带二进制文件，第一次使用需要直接点按钮更新。如果更新失败，自行去项目下载二进制文件。
          - factory=29.6 MB, sysupgrade=29.2 MB
+      35.  [statistics, supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-1107)
+         - factory=29.9 MB, sysupgrade=29.4 MB
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
+3. luci主题类
+   1. [打开所有主题; luci-themedog, luci-app-alpha-config, luci-app-argone-config](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-1157)
+      - 启动成功
+      - 主题加载失败: ATMateriel (包括 `_Brown` 和 `_red`), Argone, Design, Edge, INas (切换以后还是 `Argon` 界面), Opentopd, ThemeDog (菜单栏无法显示), ifit, tomato
+      - factory=34.1 MB, sysupgrade=33.7 MB
 
 ### 无法使用
 1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待) (如果急需这些软件包，需要在新增actions run时开启 `fix_version_invalid` / 本地Docker编译时设置 `FIX_VERSION_INVALID=true` 。将会使用overwrite遍历修复版本号(可能会导致其他正常软件包的版本号被修改))
@@ -208,6 +220,20 @@
       99999. ...
 12. 文件错误
    1. speedtest-web (依赖 by ): `speedtest-web-1.1.5.tar.zst: Wrong hash (probably caused by .gitattributes), expecting 63dad14ce21c78b37f223aacc4fd4611bbe1f9619afff8d52a38186441cb6a86, got aff79406f9050e7ccc04af51458e00e49a90821dd50fb4cc2ab5d7fa7a66f3db`
+
+### 建议
+
+1. `make menuconfig`
+   1. 勾选软件包时，先选择 `luci` ，再选择其他
+   2. 已经添加软件源，部分软件包应该在某处，但是页面上找不到?
+      1. 按下 `/` 搜索软件包
+      2. 留意 `Depends on: ` 部分，确保条件已满足
+      3. 查看 `Location:` ，获取软件包的具体路径
+   3. 记录自己开启/关闭的功能，因为关闭功能时不会自动取消依赖项
+      1. 先打开一次 `make menuconfig` ，不更改任何选项，保存并退出
+      2. 备份好原始全量 `.config`
+      3. 开始勾选软件包，可以 `Save` 然后对比文件变化。记得记录打开/关闭了什么
+      4. 之后需要关闭软件包时，建议恢复原始 `.config` ，然后重新打开其他软件包
 
 ## 原README ↓
 
