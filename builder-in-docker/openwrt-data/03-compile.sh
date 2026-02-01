@@ -13,7 +13,11 @@ cd "$OPENWRT_PATH"
 make defconfig
 if ! [[ -f "$OPENWRT_PATH/flags-downloaded-packages" ]]
 then
-    make download -j8
+    for i in $(seq 1 16); do
+        if make download -j8; then
+            break
+        fi
+    done
     #find dl -size -1024c -exec ls -l {} \;
     #find dl -size -1024c -exec rm -f {} \;
     touch "$OPENWRT_PATH/flags-downloaded-packages"
