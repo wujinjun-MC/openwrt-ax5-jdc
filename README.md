@@ -27,7 +27,7 @@
 7. 解决了部分常见问题
    1. `ip-full` 和 `ip-tiny` 冲突 - 禁用 `ip-tiny`
    2. 修复UPnP - 默认打开libupnp
-   3. 关闭 `luci-app-oaf` 避免编译appfilter(有bug无法编译)
+   3. 关闭 `luci-app-oaf` 避免编译 KMOD_oaf (有bug无法编译) (依赖 by appfilter)
    4. 自动编译缺失的 `ccache` 工具链 (即使已经安装 `ccache` 也不行，必须使用官方源码编译到指定目录)
 8. 根据actions过程创建Dockerfile和所需的一键脚本，方便本地编译
 
@@ -123,16 +123,16 @@
          - wechatpush: 勾选全部附加项
          - Docker本地编译，没有Release
          - factory=32 M, sysupgrade=32 M
-      31.  [wrtbwmon, xfrpc, xinetd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.31-0221)
+      32.  [wrtbwmon, xfrpc, xinetd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.31-0221)
          - factory=29.9 MB, sysupgrade=29.4 MB
-      31.  [luci-app-zerotier, luci-themedog](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      33.  [luci-app-zerotier, luci-themedog](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - 不省略 `luci-app-` 开头，因为不以 `luci-app-` 开头
          - Docker本地编译，没有Release
          - factory=31 M, sysupgrade=30 M
-      31.  [chatgpt-web, clamav, ddns-go](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      34.  [chatgpt-web, clamav, ddns-go](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=38 M, sysupgrade=38 M
-      31.  [supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      35.  [supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - factory=29.6 MB, sysupgrade=29.2 MB
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 
