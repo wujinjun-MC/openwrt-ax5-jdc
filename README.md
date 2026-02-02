@@ -72,19 +72,19 @@
          - factory=30.8 MB, sysupgrade=30.4 MB
       10. [internet-detector, iperf3-server, iptvhelper, irqbalance, istoreenhance, istorego](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-1836)
          - factory=84 MB, sysupgrade=83.5 MB
-      11.  [kai, ksmbd, ledtrig-rssi, ledtrig-switch](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
-         - Docker本地编译，没有Release
-      12.  [lldpd, lxc, mac, mfun](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
-         - Docker本地编译，没有Release
+      11. [kai, ksmbd, ledtrig-rssi, ledtrig-switch](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.02-1026)
+         - factory=67 MB, sysupgrade=66.5 MB
+      12. [lldpd, lxc, mac, mfun](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.02-1111-21575899723)
+         - factory=82 MB, sysupgrade=81.5 MB
       13. [microsocks， minidlna, mjpg-streamer, mosquitto](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-2305)
          - factory=31.4 MB, sysupgrade=30.8 MB
       14. [msd_lite, my-dnshelper](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
-         - Docker本地编译，没有Release
+         - factory=29.7 MB, sysupgrade=29.2 MB
       15. [natter2, netdata, netspeedtest](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2317)
          - factory=44.6 MB, sysupgrade=44 MB
-      16.  [nfs, nginx-manager, nlbwmon, npc, nps, frpc, frps](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      16.  [nfs, nginx-manager, nlbwmon, npc, nps, frpc, frps](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.02-0250)
          - (pending) only tested nginx-manager with [errors](#failed-plugin-luci-app-nginx-manager)
-         - Docker本地编译，没有Release
+         - factory=45 MB, sysupgrade=44.5 MB
       17.  [ngrokc, nut, olsr, olsr-services, olsr-viz](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2027)
          - factory=30.6 MB, sysupgrade=30.1 MB
       18.  [poweroff, poweroffdevice, privoxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2319)
@@ -145,11 +145,14 @@
       35.  [statistics, supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-1107)
          - factory=29.9 MB, sysupgrade=29.4 MB
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
-3. luci主题类
+3. luci其他类
    1. [打开所有主题; luci-themedog, luci-app-alpha-config, luci-app-argone-config](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-1157)
       - 启动成功
       - 主题加载失败: ATMateriel (包括 `_Brown` 和 `_red`), Argone, Design, Edge, INas (切换以后还是 `Argon` 界面), Opentopd, ThemeDog (菜单栏无法显示), ifit, tomato
       - factory=34.1 MB, sysupgrade=33.7 MB
+   2. [luci-proto-pppossh, luci-proto-wireguard, luci-mod-dashboard, luci-mod-istorenext](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.02-1110-21575902269)
+      - factory=30.2 MB, sysupgrade=29.7 MB
+4. 将默认 APK 包管理器换成 OPKG (可以安装 *.ipk 软件包)
 
 ### 无法使用
 1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待) (如果急需这些软件包，需要在新增actions run时开启 `fix_version_invalid` / 本地Docker编译时设置 `FIX_VERSION_INVALID=true` 。将会使用overwrite遍历修复版本号(可能会导致其他正常软件包的版本号被修改))

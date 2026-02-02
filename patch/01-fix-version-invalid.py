@@ -3,40 +3,42 @@ import os
 import argparse
 
 # 匹配 PKG_VERSION 和 PKG_RELEASE 的正则
-PKG_VER_RE = re.compile(r'^(PKG_VERSION\s*:=\s*)(.*)$')
-PKG_REL_RE = re.compile(r'^(PKG_RELEASE\s*:=\s*)(.*)$')
+PKG_VER_RE = re.compile(r'^(PKG_VERSION\s*:=?\s*)(.*)$')
+PKG_REL_RE = re.compile(r'^(PKG_RELEASE\s*:=?\s*)(.*)$')
 
 def is_variable(val):
     """检测是否为 Makefile 变量，例如 $(AUTO_RELEASE) 或 ${VERSION}"""
     return '$(' in val or '${' in val
 
-def fix_version_string(version):
+def sanitize_apk_version(version):
     """
-    针对 APK 规则修复版本字符串：
-    - 跳过 Makefile 变量
-    - 移除开头的 'v' (v1.2 -> 1.2)
-    - 将非标准的横杠换成点 (1.2-beta -> 1.2.beta)
-    - 清理不可见字符
+    1. 分段 (-, _, .)
+    2. 数字开头 -> 仅提取数字 (1a2 -> 12)
+    3. 字母开头 -> 整段变 0 (beta -> 0, r1 -> 0)
     """
     val = version.strip()
-    
-    if is_variable(val):
-        return val # 保持原样
-        
-    # 移除开头的 v
-    val = re.sub(r'^[vV]+', '', val)
-    # APK 严禁在 PKG_VERSION 中使用横杠（横杠仅保留给 PKG_RELEASE 的 -r）
-    val = val.replace('-', '.')
-    return val
+    if not val or is_variable(val):
+        return val
 
-def fix_release_string(release):
-    """确保 PKG_RELEASE 仅包含数字，除非是变量"""
-    val = release.strip()
+    # 移除开头的 v (符合 APK 必须以数字开头的强制要求)
+    val = re.sub(r'^[vV]+', '', val)
     
-    if is_variable(val):
-        return val # 保持原样
+    # 分段
+    parts = re.split(r'[-._]', val)
+    clean_parts = []
+    
+    for p in parts:
+        if not p: continue
         
-    return re.sub(r'[^0-9]', '', val)
+        if p[0].isdigit() or p[0] == "r":
+            # 数字开头：提取所有数字
+            numeric_only = re.sub(r'\D', '', p)
+            clean_parts.append(numeric_only if numeric_only else "0")
+        else:
+            # 字母开头：整段归零
+            clean_parts.append("0")
+
+    return ".".join(clean_parts) if clean_parts else "0"
 
 def process_file(filepath, apply_changes=False):
     if not os.path.isfile(filepath):
@@ -45,38 +47,45 @@ def process_file(filepath, apply_changes=False):
 
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
-            lines = f.readlines()
+            content = f.read()
+            lines = content.splitlines()
 
+        is_luci = "luci.mk" in content
         new_lines = []
         file_changed = False
         
         for line in lines:
-            # 尝试匹配 PKG_VERSION
+            # 处理 PKG_VERSION
             v_match = PKG_VER_RE.match(line)
             if v_match:
                 prefix, old_val = v_match.groups()
-                new_val = fix_version_string(old_val)
-                if old_val != new_val:
-                    print(f"[VERSION] {filepath}: '{old_val}' -> '{new_val}'")
-                    line = f"{prefix}{new_val}\n"
+                new_val = sanitize_apk_version(old_val)
+                if old_val.strip() != new_val:
+                    print(f"[VERSION] {filepath}: '{old_val.strip()}' -> '{new_val}'")
+                    line = f"{prefix}{new_val}"
                     file_changed = True
             
-            # 尝试匹配 PKG_RELEASE
+            # 处理 PKG_RELEASE
             r_match = PKG_REL_RE.match(line)
             if r_match:
                 prefix, old_val = r_match.groups()
-                new_val = fix_release_string(old_val)
-                if old_val != new_val:
-                    print(f"[RELEASE] {filepath}: '{old_val}' -> '{new_val}'")
-                    line = f"{prefix}{new_val}\n"
-                    file_changed = True
+                old_val_s = old_val.strip()
+                
+                # 只有在非 LuCI 且非变量且非空时才处理
+                if not is_luci and not is_variable(old_val_s) and old_val_s:
+                    # PKG_RELEASE 同样适用该逻辑，但通常 release 只有一段
+                    new_val = sanitize_apk_version(old_val_s)
+                    if old_val_s != new_val:
+                        print(f"[RELEASE] {filepath}: '{old_val_s}' -> '{new_val}'")
+                        line = f"{prefix}{new_val}"
+                        file_changed = True
             
             new_lines.append(line)
 
         if file_changed:
             if apply_changes:
                 with open(filepath, 'w', encoding='utf-8') as f:
-                    f.writelines(new_lines)
+                    f.write("\n".join(new_lines) + "\n")
                 print(f"已写入文件: {filepath}")
             else:
                 pass
@@ -86,6 +95,7 @@ def process_file(filepath, apply_changes=False):
 
     except Exception as e:
         print(f"处理失败 {filepath}: {e}")
+        return False
 
 def main():
     parser = argparse.ArgumentParser(description="OpenWrt APK Version Fixer")

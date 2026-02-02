@@ -382,7 +382,7 @@ jobs:
           echo "移动 *.apk 的软件包到打包目录 成功"
         else
           echo "移动 *.apk 的软件包到打包目录 失败，正在回退到 *.ipk"
-          if mv -f $OPENWRT_PATH/bin/packages/*/*/*.ipk; then
+          if mv -f $OPENWRT_PATH/bin/packages/*/*/*.ipk packages; then
             echo "移动 *.ipk 的软件包到打包目录 成功"
           else
             echo "移动 *.ipk 的软件包到打包目录 失败"
