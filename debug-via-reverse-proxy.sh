@@ -55,7 +55,7 @@ cat << 'EOF' >> ~/.bash_profile
 enter_menuconfig() {
     local target="/home/runner/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt"
     cd "$target"
-    tmux new-session -A -s config "make menuconfig"
+    tmux new-session -A -s config "make MENUCONFIG_COLOR=$MENUCONFIG_COLOR menuconfig"
 }
 
 # 执行函数
