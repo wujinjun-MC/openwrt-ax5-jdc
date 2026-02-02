@@ -32,6 +32,16 @@ on:
         description: "自动修复插件版本号不合法 (PKG_VERSION and PKG_RELEASE)"
         default: true
         type: boolean
+      menuconfig_color:
+        description: 'make menuconfig 配色。默认 blackbg (夜间模式)，原版 bluetitle'
+        required: true
+        default: 'blackbg'
+        type: choice
+        options:
+          - mono
+          - blackbg
+          - classic
+          - bluetitle
   schedule:
     - cron: 0 19 * * 5
 
@@ -57,6 +67,7 @@ env:
   FORCE_SINGLE_THREAD: ${{ inputs.force_single_thread || false }}
   USE_CCACHE: ${{ inputs.use_ccache || true }}
   FIX_VERSION_INVALID: ${{ inputs.fix_version_invalid || true }}
+  MENUCONFIG_COLOR: ${{ inputs.menuconfig_color || 'blackbg' }}
 
 jobs:
   Build:
