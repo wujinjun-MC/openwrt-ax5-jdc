@@ -63,41 +63,62 @@
          - dnsmasq-ipset: 也使用 `dnsmasq-full`
          - factory=36.6 MB, sysupgrade=36.1 MB
       6. [eqos, eqosplus, example](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-1034)
+         - 启动成功
+         - 找不到eqosplus?
+            - 在 Control -> 定时限速
          - factory=29.9 MB, sysupgrade=29.4 MB
       7. [fastnet, fchomo, filemanager, fullconenat](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-1038)
+         - 启动成功
+         - fullconenat
+            - 设置为指定 IP 或 全网开启后，仍然显示未运行
+            - 原版已经支持此功能，不要重复添加
          - factory=45.6 MB, sysupgrade=45.1 MB
       8. [fwknopd, gost, guest-wifi, hd-idle](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-0253)
+         - 启动成功
+         - guest-wifi: 点击添加后没有反应，而且引起无线设置异常，需要重建
          - factory=38.6 MB, sysupgrade=38.2 MB
       9. [https-dns-proxy, ikoolproxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-2316)
+         - 启动成功
          - factory=30.8 MB, sysupgrade=30.4 MB
       10. [internet-detector, iperf3-server, iptvhelper, irqbalance, istoreenhance, istorego](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-1836)
+         - 启动成功
+         - istoreenhance (KSpeeder): [Runtime error](#failed-plugin-luci-app-istoreenhance)
          - factory=84 MB, sysupgrade=83.5 MB
       11. [kai, ksmbd, ledtrig-rssi, ledtrig-switch](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.02-1026)
          - factory=67 MB, sysupgrade=66.5 MB
       12. [lldpd, lxc, mac, mfun](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.02-1111-21575899723)
          - factory=82 MB, sysupgrade=81.5 MB
-      13. [microsocks， minidlna, mjpg-streamer, mosquitto](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-2305)
+      13. [microsocks, minidlna, mjpg-streamer, mosquitto](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-2305)
+         - 启动成功
          - factory=31.4 MB, sysupgrade=30.8 MB
       14. [msd_lite, my-dnshelper](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - factory=29.7 MB, sysupgrade=29.2 MB
       15. [natter2, netdata, netspeedtest](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2317)
+         - 启动成功
          - factory=44.6 MB, sysupgrade=44 MB
       16.  [nfs, nginx-manager, nlbwmon, npc, nps, frpc, frps](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.02-0250)
          - nginx-manager: [errors](#failed-plugin-luci-app-nginx-manager)
             - cause by: [tabmenu.htm not found](https://github.com/sundaqiang/openwrt-packages/issues/5#issuecomment-1074677929)
          - factory=45 MB, sysupgrade=44.5 MB
       17.  [ngrokc, nut, olsr, olsr-services, olsr-viz](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2027)
+         - 启动成功
+         - olsr 系列软件包导致进不去管理页面，一直自动跳到 olsr 可视化 (olsr-viz) 页面，必须通过 SSH 删除 `luci-app-olsr` 和所有依赖，重新输入管理页面后才能进入管理页面
          - factory=30.6 MB, sysupgrade=30.1 MB
       18.  [poweroff, poweroffdevice, privoxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2319)
+         - 启动成功
          - factory=29.8 MB, sysupgrade=29.3 MB
       19.  [pushbot, qbittorrent, qos, ramfree](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2337)
+         - 启动成功
          - factory=43.3 MB, sysupgrade=42.9 MB
       20.  [rclone, rp-pppoe-server](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0915)
+         - 启动成功
          - [rclone 失败](#failed-plugin-luci-app-rclone)，需要补充 `luci-lib-ipkg`
          - factory=53.3 MB, sysupgrade=52.8 MB
       21.  [rustdesk-server, ser2net](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0915)
+         - 启动成功
          - factory=33.1 MB, sysupgrade=32.6 MB
       22.  [spotifyd, squid, sshtunnel, ssr-mudb-server, ssr-plus (defaults)](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0256)
+         - 启动成功
          - factory=58.9 MB, sysupgrade=58.4 MB
       23.  [openclash, openthread, openvpn, openvpn-client, openwisp](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
@@ -428,6 +449,32 @@ In [anonymous function](), file /usr/share/ucode/luci/runtime.uc, line 148, byte
  `        return lcall.call(modname, method, ...args);`
   Near here ----------------------------------------^
 ```
+
+4. luci-app-istoreenhance <span id=failed-plugin-luci-app-istoreenhance></span>
+
+```
+/usr/lib/lua/luci/ucodebridge.lua:23: /usr/lib/lua/luci/model/istoreenhance.lua:13: attempt to index local 'obj' (a nil value)
+
+In error(), file [C]
+called from function [anonymous function] (/usr/lib/lua/luci/ucodebridge.lua:23)
+called from function ((tail call))
+In [anonymous function](), file /usr/share/ucode/luci/runtime.uc, line 148, byte 45:
+  called from function [arrow function] (/usr/share/ucode/luci/dispatcher.uc:813:4)
+  called from function render ([C])
+  called from function render_action (/usr/share/ucode/luci/dispatcher.uc:787:24)
+  called from function run_action (/usr/share/ucode/luci/dispatcher.uc:814:4)
+  called from function [anonymous function] (/usr/share/ucode/luci/dispatcher.uc:1027:48)
+  called from anonymous function (/www/cgi-bin/luci:39:13)
+
+ `        return lcall.call(modname, method, ...args);`
+  Near here ----------------------------------------^
+```
+
+
+
+
+
+
 
 
 
