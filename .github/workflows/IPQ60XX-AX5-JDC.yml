@@ -133,7 +133,7 @@ jobs:
     - name: Generate Release Tag (生成日期Tag)
       run: |
         # 生成格式为 2024.05.20-1530 的时间戳
-        RELEASE_TAG="IPQ60XX-AX5-JDC-6.12-$(date +%Y.%m.%d-%H%M)"
+        RELEASE_TAG="IPQ60XX-AX5-JDC-6.12-$(date +%Y.%m.%d-%H%M)-${{ github.run_id }}"
         echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
         echo "FIRMWARE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
 
