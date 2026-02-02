@@ -83,7 +83,8 @@
       15. [natter2, netdata, netspeedtest](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2317)
          - factory=44.6 MB, sysupgrade=44 MB
       16.  [nfs, nginx-manager, nlbwmon, npc, nps, frpc, frps](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.02-0250)
-         - (pending) only tested nginx-manager with [errors](#failed-plugin-luci-app-nginx-manager)
+         - nginx-manager: [errors](#failed-plugin-luci-app-nginx-manager)
+            - cause by: [tabmenu.htm not found](https://github.com/sundaqiang/openwrt-packages/issues/5#issuecomment-1074677929)
          - factory=45 MB, sysupgrade=44.5 MB
       17.  [ngrokc, nut, olsr, olsr-services, olsr-viz](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2027)
          - factory=30.6 MB, sysupgrade=30.1 MB
@@ -92,7 +93,7 @@
       19.  [pushbot, qbittorrent, qos, ramfree](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2337)
          - factory=43.3 MB, sysupgrade=42.9 MB
       20.  [rclone, rp-pppoe-server](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0915)
-         - [rclone失败](#failed-plugin-luci-app-rclone)
+         - [rclone 失败](#failed-plugin-luci-app-rclone)，需要补充 `luci-lib-ipkg`
          - factory=53.3 MB, sysupgrade=52.8 MB
       21.  [rustdesk-server, ser2net](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0915)
          - factory=33.1 MB, sysupgrade=32.6 MB
@@ -105,6 +106,7 @@
          - Docker本地编译，没有Release
          - factory=46 M, sysupgrade=45 M
       25.  [shutdown, smartdns, socat, softether, softethervpn](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-2107)
+         - 启动成功
          - smartdns: 不能勾选WebUI，否则等着超时吧 (Node.JS怪谈)
          - factory=34.3 MB, sysupgrade=33.8 MB
       26.  [tailscale-community, taskplan, tcpdump, timecontrol, timewol, tinyfilemanager](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
@@ -118,6 +120,7 @@
          - 启动成功，可进入软件界面
          - factory=30.2 MB, sysupgrade=29.7 MB
       29.  [usteer, v2raya, vlmcsd, vnstat2, vsftpd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-1514)
+         - 启动成功
          - factory=47 MB, sysupgrade=46.5 MB
       30.  [watchcat, watchdog, webd, webdav, webviewdev](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - webd: 取消勾选 `Include webd Binary`
@@ -138,11 +141,13 @@
          - Docker本地编译，没有Release
          - factory=38 M, sysupgrade=38 M
       35.  [supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-0124)
+         - 启动成功
          - 为什么显示 `Supervisord 未运行`
             - 来自 [项目说明](https://github.com/sundaqiang/openwrt-packages/tree/master/luci-app-nginx-manager):
                - > 插件没附带二进制文件，第一次使用需要直接点按钮更新。如果更新失败，自行去项目下载二进制文件。
          - factory=29.6 MB, sysupgrade=29.2 MB
-      35.  [statistics, supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-1107)
+      36.  [statistics, supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-1107)
+         - 启动成功
          - factory=29.9 MB, sysupgrade=29.4 MB
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 3. luci其他类
