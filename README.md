@@ -221,8 +221,9 @@
    2. luci-app-quickstart: `luci-app-quickstart does not support JavaScript source minification`, `luci-app-quickstart does not support CSS source minification`
 4. 冲突
    1. BitTorrent, P2P全开 导致 qbittorrent 安装失败
-5. 看起来编译成功，实际刷入后用不了
+5. 看起来编译成功，实际刷入后用不了 (参见 [已测试通过](#已测试通过) 的测试状态)
    1. luci-theme-argone (依赖 by luci-app-argone-config): 设置主题后直接出现luci错误，必须进SSH改回原来主题
+   99999. ...
 6. 迷惑行为
    1. luci-app-mosdns: 自己覆盖自己 `ERROR: luci-app-mosdns-1.6.16-r1: trying to overwrite etc/init.d/mosdns owned by mosdns-5.3.3-r1.`
    2. luci-app-pppoe-relay: 自己覆盖自己 `ERROR: luci-app-pppoe-relay-26.028.32477~ec83425: trying to overwrite etc/init.d/pppoe-relay owned by rp-pppoe-relay-4.0-r2.`

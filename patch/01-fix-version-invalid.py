@@ -92,8 +92,9 @@ def process_file(filepath, apply_changes=False):
                 #         print(f"[RELEASE] {filepath}: '{old_val_s}' -> '{new_val}'")
                 #         line = f"{prefix}{new_val}"
                 #         file_changed = True
-                if '$(AUTORELEASE)' in old_val_s:
+                if '$(AUTORELEASE)' == old_val_s or '$(COMMITCOUNT)' == old_val_s:
                     print(f"[GOOD-REL-VAR] {filepath}: 安全的PKG_RELEASE '{old_val_s}'")
+                    new_val = old_val_s
                 elif is_variable(old_val_s):
                     # 非 LuCI 但包含变量引用 (如 $(ARCH)-1)，在 APK 中非法，强制重置为 1
                     print(f"[DANGER-REL] {filepath}: 检测到变量污染 '{old_val_s}' -> '1'")
