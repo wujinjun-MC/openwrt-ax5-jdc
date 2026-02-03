@@ -55,12 +55,14 @@ cat << 'EOF' >> ~/.bash_profile
 enter_menuconfig() {
     local target="/home/runner/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt"
     cd "$target"
-    tmux new-session -A -s config "make MENUCONFIG_COLOR=$MENUCONFIG_COLOR menuconfig"
+EOF
+echo "    tmux new-session -A -s config \"make MENUCONFIG_COLOR=$MENUCONFIG_COLOR menuconfig\"" >> ~/.bash_profile
+cat << 'EOF2' >> ~/.bash_profile
 }
 
 # 执行函数
 #enter_menuconfig
-EOF
+EOF2
 
 sleep 10
 if [ "$1"x != "nonblock"x ]
