@@ -69,6 +69,12 @@
             - 需要联网下载规则等必须文件，否则显示"未运行"
          - dnsmasq-ipset: 也使用 `dnsmasq-full`
          - factory=36.6 MB, sysupgrade=36.1 MB
+      6. [drawio, gogs, heimdall, homeassistant, **homeredirect** (previously PKG_VERSION invalid)](about:blank)
+         - 启动成功
+         - drawio, gogs, heimdall, homeassistant: 要求安装相应的 Docker 容器才能使用
+         - homeredirect: `权限不足，无法读取 UCI 配置。` 可能因为不兼容新系统
+         - Docker本地编译，没有Release
+         - factory=36 M, sysupgrade=36 M
       6. [eqos, eqosplus, example](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-1034)
          - 启动成功
          - 找不到eqosplus?
@@ -194,19 +200,30 @@
       - factory=30.2 MB, sysupgrade=29.7 MB
 4. 将默认 APK 包管理器换成 OPKG (可以安装 *.ipk 软件包)
    1. [apk->opkg, luci-lib-ipkg, luci-nginx, luci-app-{alpha,argone,design}-config, luci-app-nginx-manager, all themes on](about:blank)
-         - Docker本地编译，没有Release
-         - sysupgrade=34.2 MB
+      - Docker本地编译，没有Release
+      - sysupgrade=34.2 MB
 5. Utilities类
    1. [coap-client, colrm, cpulimit, cpupower, cpusage, dbus-utils, device-observatory, dmesg](about:blank)
-         - coap-client: 一直提示 Not Found ，输入程序路径也不行
-         - cpupower: 不是 Intel CPU ，用不上
-         - device-observatory: 不知道在哪里
-         - Docker本地编译，没有Release
-         - sysupgrade=29.5 MB
+      - coap-client: 一直提示 Not Found ，输入程序路径也不行
+      - cpupower: 不是 Intel CPU ，用不上
+      - device-observatory: 不知道在哪里
+      - Docker本地编译，没有Release
+      - sysupgrade=29.5 MB
    2. [coreutils](about:blank)
-         - coreutils: 全部打开
-         - Docker本地编译，没有Release
-         - sysupgrade=30.8 MB
+      - coreutils: 全部打开
+      - Docker本地编译，没有Release
+      - sysupgrade=30.8 MB
+   2. [docker, docker-compose, dockerd, luci-app-docker, luci-app-dockerman](about:blank)
+      - Docker本地编译，没有Release
+      - sysupgrade=87.9 MB
+   2. [dos2unix, dropbearconvert, dtc (+ Build dtc as static binary), enterprise-numbers, eza, fastfetch, fdt-utils](about:blank)
+      - dtc: 用法未知
+      - enterprise-numbers: 没看到命令
+      - Docker本地编译，没有Release
+      - sysupgrade=32.0 MB
+   2. [file, findutils, flock, fuse-overlayfs, ~~fx~~ (忘记勾选), gawk, gddrescue, getopt, ~~gnuplot~~ (忘记勾选), grep](about:blank)
+      - Docker本地编译，没有Release
+      - sysupgrade=30.2 MB
 
 ### 无法使用
 1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待) (如果急需这些软件包，需要在新增actions run时开启 `fix_version_invalid` / 本地Docker编译时设置 `FIX_VERSION_INVALID=true` 。将会使用overwrite遍历修复版本号(可能会导致其他正常软件包的版本号被修改))
@@ -285,6 +302,10 @@
       2. luci-app-ubuntu
       3. luci-app-ubuntu2
       4. luci-app-wxedge
+      5. luci-app-drawio
+      6. luci-app-gogs
+      7. luci-app-heimdall
+      8. luci-app-homeassistant
       99999.     ...
 12. 文件错误
    1. speedtest-web (依赖 by ): `speedtest-web-1.1.5.tar.zst: Wrong hash (probably caused by .gitattributes), expecting 63dad14ce21c78b37f223aacc4fd4611bbe1f9619afff8d52a38186441cb6a86, got aff79406f9050e7ccc04af51458e00e49a90821dd50fb4cc2ab5d7fa7a66f3db`
