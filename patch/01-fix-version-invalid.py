@@ -5,16 +5,19 @@ import argparse
 # 匹配 PKG_VERSION 和 PKG_RELEASE 的正则
 PKG_VER_RE = re.compile(r'^(PKG_VERSION\s*:=?\s*)(.*)$')
 PKG_REL_RE = re.compile(r'^(PKG_RELEASE\s*:=?\s*)(.*)$')
+# VAR_DEF_RE = re.compile(r'^([A-Z0-9_]+)\s*[:?]?=\s*(.*)$')
 
 def is_variable(val):
-    """检测是否为 Makefile 变量，例如 $(AUTO_RELEASE) 或 ${VERSION}"""
+    """检测是否为 Makefile 变量，例如 ~~$(AUTO_RELEASE) 或~~ ${VERSION}"""
     return '$(' in val or '${' in val
+    # return "$" in val
 
 def sanitize_apk_version(version):
     """
-    1. 分段 (-, _, .)
-    2. 数字开头 -> 仅提取数字 (1a2 -> 12)
-    3. 字母开头 -> 整段变 0 (beta -> 0, r1 -> 0)
+    APK 版本合规化逻辑：
+    1. 移除开头的 'v'。
+    2. 按 [-. _] 分段。
+    3. 数字开头 -> 提数字；字母开头 -> 归零。
     """
     val = version.strip()
     if not val or is_variable(val):
@@ -23,7 +26,7 @@ def sanitize_apk_version(version):
     # 移除开头的 v (符合 APK 必须以数字开头的强制要求)
     val = re.sub(r'^[vV]+', '', val)
     
-    # 分段
+    # 按照连接符拆分
     parts = re.split(r'[-._]', val)
     clean_parts = []
     
@@ -31,11 +34,11 @@ def sanitize_apk_version(version):
         if not p: continue
         
         if p[0].isdigit() or p[0] == "r":
-            # 数字开头：提取所有数字
-            numeric_only = re.sub(r'\D', '', p)
-            clean_parts.append(numeric_only if numeric_only else "0")
+            # 数字开头段：保留数字
+            num = re.sub(r'\D', '', p)
+            clean_parts.append(num if num else "0")
         else:
-            # 字母开头：整段归零
+            # 字母开头段：整段变 0
             clean_parts.append("0")
 
     return ".".join(clean_parts) if clean_parts else "0"
@@ -50,7 +53,7 @@ def process_file(filepath, apply_changes=False):
             content = f.read()
             lines = content.splitlines()
 
-        is_luci = "luci.mk" in content
+        is_luci = any("luci.mk" in line for line in lines)
         new_lines = []
         file_changed = False
         
@@ -71,9 +74,33 @@ def process_file(filepath, apply_changes=False):
                 prefix, old_val = r_match.groups()
                 old_val_s = old_val.strip()
                 
-                # 只有在非 LuCI 且非变量且非空时才处理
-                if not is_luci and not is_variable(old_val_s) and old_val_s:
-                    # PKG_RELEASE 同样适用该逻辑，但通常 release 只有一段
+                # if is_luci:
+                #     # LuCI 包强制清空
+                #     if old_val_s != "":
+                #         print(f"[LUCI-REL] {filepath}: 强制清空")
+                #         line = "PKG_RELEASE:="
+                #         file_changed = True
+                # elif is_variable(old_val_s):
+                #     # 非 LuCI 但包含变量引用 (如 $(ARCH)-1)，在 APK 中非法，强制重置为 1
+                #     print(f"[DANGER-REL] {filepath}: 检测到变量污染 '{old_val_s}' -> '1'")
+                #     line = "PKG_RELEASE:=1"
+                #     file_changed = True
+                # elif old_val_s:
+                #     # 普通字符串执行合规化
+                #     new_val = sanitize_apk_version(old_val_s)
+                #     if old_val_s != new_val:
+                #         print(f"[RELEASE] {filepath}: '{old_val_s}' -> '{new_val}'")
+                #         line = f"{prefix}{new_val}"
+                #         file_changed = True
+                if '$(AUTORELEASE)' in old_val_s:
+                    print(f"[GOOD-REL-VAR] {filepath}: 安全的PKG_RELEASE '{old_val_s}'")
+                elif is_variable(old_val_s):
+                    # 非 LuCI 但包含变量引用 (如 $(ARCH)-1)，在 APK 中非法，强制重置为 1
+                    print(f"[DANGER-REL] {filepath}: 检测到变量污染 '{old_val_s}' -> '1'")
+                    line = "PKG_RELEASE:=1"
+                    file_changed = True
+                elif old_val_s:
+                    # 普通字符串执行合规化
                     new_val = sanitize_apk_version(old_val_s)
                     if old_val_s != new_val:
                         print(f"[RELEASE] {filepath}: '{old_val_s}' -> '{new_val}'")
@@ -111,7 +138,7 @@ def main():
     # 1. 直接检查字符串
     if args.direct_val and not any([args.file, args.files, args.dir, args.dirs]):
         print(f"输入: {args.direct_val}")
-        print(f"修复: {fix_version_string(args.direct_val)}")
+        print(f"修复: {sanitize_apk_version(args.direct_val)}")
         return
 
     # 汇总待处理文件
@@ -120,11 +147,11 @@ def main():
     if args.files: targets.extend(args.files)
     
     # 汇总待处理目录
-    target_dirs = []
-    if args.dir: target_dirs.append(args.dir)
-    if args.dirs: target_dirs.extend(args.dirs)
+    tdirs = []
+    if args.dir: tdirs.append(args.dir)
+    if args.dirs: tdirs.extend(args.dirs)
 
-    for d in target_dirs:
+    for d in tdirs:
         for root, _, files in os.walk(d):
             if "Makefile" in files:
                 targets.append(os.path.join(root, "Makefile"))
