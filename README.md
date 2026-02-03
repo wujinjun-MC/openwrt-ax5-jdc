@@ -55,6 +55,7 @@
          - factory=30.5 MB, sysupgrade=30 MB
       3. [control-timewol, control-webrestriction, control-weburl, cpufreq, cpulimit, dcwapd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2201)
          - 启动成功
+         - dcwapd: 开启后会立即断开连接，无法恢复，需要 等待回滚 / 重新刷机
          - factory=30.1 MB, sysupgrade=29.6 MB
       4. [cifs-mount, cloudflared, cloudflarespeedtest, commands](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2359)
          - 启动成功
