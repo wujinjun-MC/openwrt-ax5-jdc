@@ -64,6 +64,17 @@ cat << 'EOF2' >> ~/.bash_profile
 #enter_menuconfig
 EOF2
 
+# 一键 kill Cpolar
+cat << 'EOF' >> ~/.bash_profile
+kill_cpolar() {
+    local kill_cmd="killall cpolar"
+    read -e -p "确认杀死 cpolar 进程 (执行命令 $kill_cmd) ? 一旦杀死则无法再重新开启。请输入 \"kill\" 确认: " kill_confirm
+    if [ "$kill_confirm"x = "kill"x ]; then
+        eval "$kill_cmd"
+    fi
+}
+EOF
+
 sleep 10
 if [ "$1"x != "nonblock"x ]
 then
