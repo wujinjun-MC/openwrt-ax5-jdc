@@ -141,8 +141,9 @@
          - 启动成功
          - factory=58.9 MB, sysupgrade=58.4 MB
       23.  [openclash, openthread, openvpn, openvpn-client, openwisp](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+         - openthread: [运行失败](#failed-plugin-luci-app-openthread)
          - Docker本地编译，没有Release
-         - factory=39 M, sysupgrade=39 M
+         - sysupgrade=38.1 M
       24.  [ota, p910nd, packet-capture, pagekitec, partexp, passwall2 (defaults), pbr](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=46 M, sysupgrade=45 M
@@ -200,46 +201,65 @@
       - factory=30.2 MB, sysupgrade=29.7 MB
 4. 将默认 APK 包管理器换成 OPKG (可以安装 *.ipk 软件包)
    1. [apk->opkg, luci-lib-ipkg, luci-nginx, luci-app-{alpha,argone,design}-config, luci-app-nginx-manager, all themes on](about:blank)
+      - 启动成功
       - Docker本地编译，没有Release
       - sysupgrade=34.2 MB
 5. Utilities类
-   1. [coap-client, colrm, cpulimit, cpupower, cpusage, dbus-utils, device-observatory, dmesg](about:blank)
-      - coap-client: 一直提示 Not Found ，输入程序路径也不行
-      - cpupower: 不是 Intel CPU ，用不上
-      - device-observatory: 不知道在哪里
-      - Docker本地编译，没有Release
-      - sysupgrade=29.5 MB
-   2. [coreutils](about:blank)
-      - coreutils: 全部打开
-      - Docker本地编译，没有Release
-      - sysupgrade=30.8 MB
-   2. [docker, docker-compose, dockerd, luci-app-docker, luci-app-dockerman](about:blank)
-      - Docker本地编译，没有Release
-      - sysupgrade=87.9 MB
-   2. [dos2unix, dropbearconvert, dtc (+ Build dtc as static binary), enterprise-numbers, eza, fastfetch, fdt-utils](about:blank)
-      - dtc: 用法未知
-      - enterprise-numbers: 没看到命令
-      - Docker本地编译，没有Release
-      - sysupgrade=32.0 MB
-   2. [file, findutils, flock, fuse-overlayfs, ~~fx~~ (忘记勾选), gawk, gddrescue, getopt, ~~gnuplot~~ (忘记勾选), grep](about:blank)
-      - Docker本地编译，没有Release
-      - sysupgrade=30.2 MB
-   2. [mmc-utils, more, moreutils, namei, nand-utils, naywatch, netspeedtest, nnn, nsenter, nss-utils, nssinfo, nsutils, oath-toolkit](about:blank)
-      - more, moreutils: 仍然显示 BusyBox
-      - naywatch: 持续错误
-         ```
-         sh: 1: unknown operand
-         BusyBox v1.37.0 (2026-01-30 05:13:48 UTC) multi-call binary.
+   1. 无分类
+      1. [coap-client, colrm, cpulimit, cpupower, cpusage, dbus-utils, device-observatory, dmesg](about:blank)
+         - 启动成功
+         - coap-client: 一直提示 Not Found ，输入程序路径也不行
+         - cpupower: 不是 Intel CPU ，用不上
+         - device-observatory: 不知道在哪里
+         - Docker本地编译，没有Release
+         - sysupgrade=29.5 MB
+      2. [coreutils](about:blank)
+         - 启动成功
+         - coreutils: 全部打开
+         - Docker本地编译，没有Release
+         - sysupgrade=30.8 MB
+      3. [docker, docker-compose, dockerd, luci-app-docker, luci-app-dockerman](about:blank)
+         - 启动成功
+         - Docker本地编译，没有Release
+         - sysupgrade=87.9 MB
+      4. [dos2unix, dropbearconvert, dtc (+ Build dtc as static binary), enterprise-numbers, eza, fastfetch, fdt-utils](about:blank)
+         - 启动成功
+         - dtc: 用法未知
+         - enterprise-numbers: 没看到命令
+         - Docker本地编译，没有Release
+         - sysupgrade=32.0 MB
+      5. [file, findutils, flock, fuse-overlayfs, ~~fx~~ (忘记勾选), gawk, gddrescue, getopt, ~~gnuplot~~ (忘记勾选), grep](about:blank)
+         - 启动成功
+         - Docker本地编译，没有Release
+         - sysupgrade=30.2 MB
+      6. [mmc-utils, more, moreutils, namei, nand-utils, naywatch, netspeedtest, nnn, nsenter, nss-utils, nssinfo, nsutils, oath-toolkit](about:blank)
+         - 启动成功
+         - more, moreutils: 仍然显示 BusyBox
+         - naywatch: 持续错误
+            ```
+            sh: 1: unknown operand
+            BusyBox v1.37.0 (2026-01-30 05:13:48 UTC) multi-call binary.
 
-         Usage: sleep [N]...
+            Usage: sleep [N]...
 
-         Pause for a time equal to the total of the args given, where each arg can
-         have an optional suffix of (s)econds, (m)inutes, (h)ours, or (d)ays
-         ```
-      - netspeedtest: 需要安装 `luci-app-` 版，直接在 `Utilities` 安装，找不到命令
-      - nssinfo: 退出会卡住，再按一次 `Ctrl-C` 出现 `Segmentation fault`
-      - Docker本地编译，没有Release
-      - sysupgrade=33.9 MB
+            Pause for a time equal to the total of the args given, where each arg can
+            have an optional suffix of (s)econds, (m)inutes, (h)ours, or (d)ays
+            ```
+         - netspeedtest: 需要安装 `luci-app-` 版，直接在 `Utilities` 安装，找不到命令
+         - nssinfo: 退出会卡住，再按一次 `Ctrl-C` 出现 `Segmentation fault`
+         - Docker本地编译，没有Release
+         - sysupgrade=33.9 MB
+   2. 有分类
+      1. BitTorrent
+         1. [mktorrent, opentracker, qbittorrent-enhanced-edition, rtorrent-rpc](about:blank)
+            - 启动成功
+            - Docker本地编译，没有Release
+            - sysupgrade=43.7 MB
+      2. Download Manager
+         1. [ariang, ariang-nginx, leech, webui-aria2](about:blank)
+            - 启动成功
+            - Docker本地编译，没有Release
+            - sysupgrade=31.9 MB
 
 ### 无法使用
 1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待) (如果急需这些软件包，需要在新增actions run时开启 `fix_version_invalid` / 本地Docker编译时设置 `FIX_VERSION_INVALID=true` 。将会使用overwrite遍历修复版本号(可能会导致其他正常软件包的版本号被修改))
@@ -325,6 +345,8 @@
       99999.     ...
 12. 文件错误
    1. speedtest-web (依赖 by ): `speedtest-web-1.1.5.tar.zst: Wrong hash (probably caused by .gitattributes), expecting 63dad14ce21c78b37f223aacc4fd4611bbe1f9619afff8d52a38186441cb6a86, got aff79406f9050e7ccc04af51458e00e49a90821dd50fb4cc2ab5d7fa7a66f3db`
+13. 未知
+   1. libsysrepo (依赖 by sysrepo, sysrepocfg, sysrepoctl)
 
 ### 建议
 
@@ -543,9 +565,28 @@ In [anonymous function](), file /usr/share/ucode/luci/runtime.uc, line 148, byte
   Near here ----------------------------------------^
 ```
 
+5. luci-app-openthread <span id=failed-plugin-luci-app-openthread></span>
 
+```
+/usr/lib/lua/luci/ucodebridge.lua:23: /usr/lib/lua/luci/template.lua:181: Failed to execute template 'admin_thread/thread_overview'.
+A runtime error occurred: [string "/usr/lib/lua/luci/view/admin_thread/thread_..."]:24: attempt to index a nil value
+stack traceback:
+[string "/usr/lib/lua/luci/view/admin_thread/thread_..."]:24: in main chunk
 
+In error(), file [C]
+called from function [anonymous function] (/usr/lib/lua/luci/ucodebridge.lua:23)
+called from function ((tail call))
+In [anonymous function](), file /usr/share/ucode/luci/runtime.uc, line 148, byte 45:
+  called from function [arrow function] (/usr/share/ucode/luci/dispatcher.uc:800:71)
+  called from function render ([C])
+  called from function render_action (/usr/share/ucode/luci/dispatcher.uc:787:24)
+  called from function run_action (/usr/share/ucode/luci/dispatcher.uc:801:5)
+  called from function [anonymous function] (/usr/share/ucode/luci/dispatcher.uc:1027:48)
+  called from anonymous function (/www/cgi-bin/luci:39:13)
 
+ `        return lcall.call(modname, method, ...args);`
+  Near here ----------------------------------------^
+```
 
 
 
