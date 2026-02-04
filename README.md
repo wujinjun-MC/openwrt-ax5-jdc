@@ -61,6 +61,10 @@
       4. [cifs-mount, cloudflared, cloudflarespeedtest, commands](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.27-2359)
          - 启动成功
          - factory=39.2 MB, sysupgrade=38.7 MB
+      4. [chatgpt-web, clamav, ddns-go](about:blank)
+         - 启动成功
+         - Docker本地编译，没有Release
+         - sysupgrade=37.4 MB
       5. [ddnsto, diskman, dnsfilter, dnsmasq-ipset, dnsproxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.28-1024)
          - 启动成功
          - diskman: 不包括btrfs
@@ -124,11 +128,23 @@
          - 启动成功
          - olsr 系列软件包导致进不去管理页面，一直自动跳到 olsr 可视化 (olsr-viz) 页面，必须通过 SSH 删除 `luci-app-olsr` 和所有依赖，重新输入管理页面后才能进入管理页面
          - factory=30.6 MB, sysupgrade=30.1 MB
+      18.  [penpot, rtbwmon, shortcutmenu, sunpanel, **systools** (with failed speedtestcli) (previously PKG_VERSION invalid)](about:blank)
+         - 启动成功
+         - penpot: 需要单独安装 (Docker 容器?)
+         - rtbwmon: 只计算外网流量，没有环境，无法测试
+         - shortcutmenu: 无意义
+         - systools: 实际上没啥作用
+         - Docker本地编译，没有Release
+         - sysupgrade=90.7 MB
       19.  [poweroff, poweroffdevice, privoxy](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2319)
          - 启动成功
          - factory=29.8 MB, sysupgrade=29.3 MB
       20.  [pushbot, qbittorrent, qos, ramfree](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.29-2337)
          - 启动成功
+         - factory=43.3 MB, sysupgrade=42.9 MB
+      20.  [qrencode, quota, rename, reptyr, rev, rhash, ripgrep, rlwrap, rng-tools, sed](about:blank)
+         - 启动成功
+         - Docker本地编译，没有Release
          - factory=43.3 MB, sysupgrade=42.9 MB
       21.  [rclone, rp-pppoe-server](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-0915)
          - 启动成功
@@ -163,7 +179,7 @@
          - Docker本地编译，没有Release
          - factory=36 M, sysupgrade=36 M
       29.  [unbound](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-1734)
-         - 启动成功，可进入软件界面
+         - 启动成功
          - factory=30.2 MB, sysupgrade=29.7 MB
       30.  [usteer, v2raya, vlmcsd, vnstat2, vsftpd](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-1514)
          - 启动成功
@@ -269,12 +285,17 @@
             - 启动成功
             - Docker本地编译，没有Release
             - sysupgrade=31.9 MB
-      2. File Transfer
+      3. File Transfer
          1. [aria2, atftp, atftpd, croc, curl, rclone, rclone-config, rrsync (requires Languages->Python->python3-light), rsync (+ Enable lz4, extremely fast compression, + Enable xxhash, extremely fast hash), rsyncd, transfer, unishare, vsftpd](about:blank)
             - 启动成功
             - 包括: LuCI->Applications->[luci-app-rclone, luci-app-unishare, luci-app-vsftpd]
             - Docker本地编译，没有Release
             - sysupgrade=73.2 MB
+      4. Firewall
+         1. [arptables-nft, conntrack, conntrackd, ip6tables-extra, ip6tables-mod-\*, ip6tables-nft, iptables-mod-\*, iptables-nft, iptaccount, iptasn, iptgeoip](about:blank)
+            - 启动成功
+            - Docker本地编译，没有Release
+            - sysupgrade=30.7 MB
 
 ### 无法使用
 1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待) (如果急需这些软件包，需要在新增actions run时开启 `fix_version_invalid` / 本地Docker编译时设置 `FIX_VERSION_INVALID=true` 。将会使用overwrite遍历修复版本号(可能会导致其他正常软件包的版本号被修改))
@@ -307,6 +328,14 @@
    27. vmease (依赖 by luci-app-istoredup)
 2. 内核不兼容
    1. kmod-oaf (依赖 by luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter)
+   2. bpf-headers (依赖 by ?, uspot):
+      ```
+      bash: line 1: /home/runner/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt/staging_dir/host/llvm-bpf/bin/clang: No such file or directory
+      bash: line 1: [: : integer expression expected
+      /home/runner/work/openwrt-ax5-jdc/openwrt-ax5-jdc/openwrt/include/bpf.mk:82: *** ERROR: LLVM/clang version too old. Minimum required: 12, found: .  Stop.
+         ERROR: package/kernel/bpf-headers failed to build.
+      ```
+   3. ...
 3. 源码有bug
    1. luci-app-cjdns: `AttributeError: module 'collections' has no attribute 'MutableSet'`
    2. luci-app-quickstart: `luci-app-quickstart does not support JavaScript source minification`, `luci-app-quickstart does not support CSS source minification`
@@ -333,6 +362,7 @@
       libmbedx509.so.7
       ```
    5. python-flask-httpauth (依赖 by onionshare-cli): `FileNotFoundError: [Errno 2] No such file or directory: '/home/ubuntu/builder/openwrt/build_dir/target-aarch64_cortex-a53_musl/pypi/Flask-HTTPAuth-4.8.0//openwrt-build/Flask_HTTPAuth-4.8.0-*.whl'`
+   6. luci-app-bandwidthd: `bandwidthd (no such package)`
 8. 工具链兼容性 (一般发生在停更的软件包)
    1. n2n (依赖 by luci-app-n2n): `Compatibility with CMake < 3.5 has been removed from CMake`
    2. minisign: `Compatibility with CMake < 3.5 has been removed from CMake`
