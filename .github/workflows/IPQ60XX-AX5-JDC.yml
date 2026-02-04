@@ -361,8 +361,8 @@ jobs:
         echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
 
-    - name: Upload Single Thread Compile Log to Artifact (备份单线程编译日志到Artifact)
-      if: always() && steps.compile_j1.outputs.compile == 'true'
+    - name: Upload Build Log and Custom Release Notes to Artifact (备份编译日志和自定义发布信息到Artifact)
+      if: always()
       uses: actions/upload-artifact@main
       with:
         name: compile-log-${{ env.FIRMWARE_TAG }}.log

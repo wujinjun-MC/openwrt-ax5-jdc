@@ -143,7 +143,7 @@
       23.  [openclash, openthread, openvpn, openvpn-client, openwisp](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=39 M, sysupgrade=39 M
-      24.  [oscam, ota, p910nd, packet-capture, pagekitec, partexp, passwall2 (defaults), pbr](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
+      24.  [ota, p910nd, packet-capture, pagekitec, partexp, passwall2 (defaults), pbr](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - Docker本地编译，没有Release
          - factory=46 M, sysupgrade=45 M
       25.  [shutdown, smartdns, socat, softether, softethervpn](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.01.30-2107)
@@ -224,6 +224,22 @@
    2. [file, findutils, flock, fuse-overlayfs, ~~fx~~ (忘记勾选), gawk, gddrescue, getopt, ~~gnuplot~~ (忘记勾选), grep](about:blank)
       - Docker本地编译，没有Release
       - sysupgrade=30.2 MB
+   2. [mmc-utils, more, moreutils, namei, nand-utils, naywatch, netspeedtest, nnn, nsenter, nss-utils, nssinfo, nsutils, oath-toolkit](about:blank)
+      - more, moreutils: 仍然显示 BusyBox
+      - naywatch: 持续错误
+         ```
+         sh: 1: unknown operand
+         BusyBox v1.37.0 (2026-01-30 05:13:48 UTC) multi-call binary.
+
+         Usage: sleep [N]...
+
+         Pause for a time equal to the total of the args given, where each arg can
+         have an optional suffix of (s)econds, (m)inutes, (h)ours, or (d)ays
+         ```
+      - netspeedtest: 需要安装 `luci-app-` 版，直接在 `Utilities` 安装，找不到命令
+      - nssinfo: 退出会卡住，再按一次 `Ctrl-C` 出现 `Segmentation fault`
+      - Docker本地编译，没有Release
+      - sysupgrade=33.9 MB
 
 ### 无法使用
 1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待) (如果急需这些软件包，需要在新增actions run时开启 `fix_version_invalid` / 本地Docker编译时设置 `FIX_VERSION_INVALID=true` 。将会使用overwrite遍历修复版本号(可能会导致其他正常软件包的版本号被修改))
