@@ -187,6 +187,7 @@
       31.  [watchcat, watchdog, webd, webdav, webviewdev](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - webd: 取消勾选 `Include webd Binary`
          - Docker本地编译，没有Release
+         - webviewdev: [缺失文件](#failed-plugin-luci-app-webviewdev)
          - factory=32 M, sysupgrade=31 M
       32.  [wechatpush, wifischedule, wizard, wol, wolplus](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases)
          - wechatpush: 勾选全部附加项
@@ -211,6 +212,23 @@
       37.  [statistics, supervisord](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-1107)
          - 启动成功
          - factory=29.9 MB, sysupgrade=29.4 MB
+   9. 大杂烩测试
+      1.  [commands, control-timewol(多选一1), control-webrestriction, control-weburl, cpufreq, cpulimit, ddns-go, eqos, eqosplus, fastnet, filemanager, firewall, iperf3-server, irqbalance, ledtrig-rssi](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.05-1144-21697765384)
+         - 启动成功
+         - factory=36.8 MB, sysupgrade=36.3 MB
+      2.  [acl, adguardhome, advanced, argon-config, amule, antiblock, arpbind, autoipsetadder, autoreboot, banip, beardropper, cloudflared, cloudflarespeedtest](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.05-1145-21697763866)
+         - 启动成功
+         - factory=50.8 MB, sysupgrade=50.4 MB
+      3.  [statistics, supervisord, tailscale-community, taskplan, tcpdump, timecontrol(多选一1), timewol(多选一1), tinyfilemanager](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.05-1347-21700273613)
+         - 启动成功
+         - factory=43.7 MB, sysupgrade=43.2 MB
+      4.  [lldpd, lucky, my-dnshelper, natter2, netdata, netspeedtest, nlbwmon, openclash, packet-capture, pagekitec, partexp, pbr, poweroff, poweroffdevice, qbittorrent, qos, ramfree, smartdns, socat, squid, sshtunnel](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.05-1501-21701904789)
+         - 启动成功
+         - poweroff, poweroffdevice: 实际上会重启
+         - factory=70 MB, sysupgrade=69.5 MB
+      5.  [statistics, supervisord, tailscale-community, taskplan, tcpdump, timecontrol(多选一1), timewol(多选一1), tinyfilemanager, tor, ttyd, ~~ua2f~~, unblockmusic, unbound, upnp, vlmcsd, vnstat2, wrtbwmon, xfrpc, xinetd](about:blank)
+         - 启动成功
+      
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 3. luci其他类
    1. [打开所有主题; luci-themedog, luci-app-alpha-config, luci-app-argone-config](https://github.com/wujinjun-MC/openwrt-ax5-jdc/releases/tag/IPQ60XX-AX5-JDC-6.12-2026.02.01-1157)
@@ -296,6 +314,11 @@
             - 启动成功
             - Docker本地编译，没有Release
             - sysupgrade=30.7 MB
+      5. NMAP Suite
+         1. [ncat-full, ndiff, nmap-full, nping, nping-ssl](about:blank)
+            - 启动成功
+            - Docker本地编译，没有Release
+            - sysupgrade=38.2 MB
 
 ### 无法使用
 1. `ERROR: info field 'version' has invalid value: package version is invalid` (可能因为OpenWRT官方从OPKG换成apk,部分软件包未适配，请耐心等待) (如果急需这些软件包，需要在新增actions run时开启 `fix_version_invalid` / 本地Docker编译时设置 `FIX_VERSION_INVALID=true` 。将会使用overwrite遍历修复版本号(可能会导致其他正常软件包的版本号被修改))
@@ -363,6 +386,7 @@
       ```
    5. python-flask-httpauth (依赖 by onionshare-cli): `FileNotFoundError: [Errno 2] No such file or directory: '/home/ubuntu/builder/openwrt/build_dir/target-aarch64_cortex-a53_musl/pypi/Flask-HTTPAuth-4.8.0//openwrt-build/Flask_HTTPAuth-4.8.0-*.whl'`
    6. luci-app-bandwidthd: `bandwidthd (no such package)`
+   7. luci-app-ua2f: 找不到 `ua2f`
 8. 工具链兼容性 (一般发生在停更的软件包)
    1. n2n (依赖 by luci-app-n2n): `Compatibility with CMake < 3.5 has been removed from CMake`
    2. minisign: `Compatibility with CMake < 3.5 has been removed from CMake`
@@ -392,6 +416,34 @@
       99999.     ...
 12. 文件错误
    1. speedtest-web (依赖 by ): `speedtest-web-1.1.5.tar.zst: Wrong hash (probably caused by .gitattributes), expecting 63dad14ce21c78b37f223aacc4fd4611bbe1f9619afff8d52a38186441cb6a86, got aff79406f9050e7ccc04af51458e00e49a90821dd50fb4cc2ab5d7fa7a66f3db`
+   2. tcpping: `tcpping-0.2.tar.zst: Wrong hash (probably caused by .gitattributes), expecting 018554a80e8a9d8fedd39821f35aa02c7c763fd42213761fba9b21c2533e1ab8, got 0ebffef5ce399d5b0ed471b57195b13905bb055009cb2ac353dbf0338d139dc9`
+      ```
+      tcpping-0.2.tar.zst: Download from https://github.com/coolsnowwolf/tcping failed
+      tcpping-0.2.tar.zst: Wrong hash (probably caused by .gitattributes), expecting 018554a80e8a9d8fedd39821f35aa02c7c763fd42213761fba9b21c2533e1ab8, got 0ebffef5ce399d5b0ed471b57195b13905bb055009cb2ac353dbf0338d139dc9
+      Cloning into 'tcpping-0.2'...
+      Updating files: 100% (8/8), done.
+      Note: switching to 'd890cc1bd8e3951390ceeff1ccb092a5d802850c'.
+
+      You are in 'detached HEAD' state. You can look around, make experimental
+      changes and commit them, and you can discard any commits you make in this
+      state without impacting any branches by switching back to a branch.
+
+      If you want to create a new branch to retain commits you create, you may
+      do so (now or later) by using -c with the switch command. Example:
+
+      git switch -c <new-branch-name>
+
+      Or undo this operation with:
+
+      git switch -
+
+      Turn off this advice by setting config variable advice.detachedHead to false
+
+      HEAD is now at d890cc1 tcping: base on libnet
+      make[3]: *** [Makefile:46: /home/ubuntu/builder/openwrt/dl/tcpping-0.2.tar.zst] Error 1
+         ERROR: package/feeds/smpackage/tcpping failed to build.
+      make[2]: *** [package/Makefile:187: package/feeds/smpackage/tcpping/compile] Error 1
+      ```
 13. 未知
    1. libsysrepo (依赖 by sysrepo, sysrepocfg, sysrepoctl)
    2. supervisor: `make[3]: *** [Makefile:46: /home/wujinjun/git/openwrt-ax5-jdc/builder-in-docker/openwrt-data/builder/openwrt/build_dir/target-aarch64_cortex-a53_musl/pypi/supervisor-python3/supervisor-4.1.0/.built] Error 1`
@@ -644,7 +696,54 @@ In [anonymous function](), file /usr/share/ucode/luci/runtime.uc, line 148, byte
   Near here ----------------------------------------^
 ```
 
+2. luci-app-webviewdev <span id=failed-plugin-luci-app-webviewdev></span>
 
+```
+/usr/lib/lua/luci/ucodebridge.lua:23: /usr/lib/lua/luci/template.lua:181: Failed to execute template 'webviewdev/main'.
+A runtime error occurred: /usr/lib/lua/luci/template.lua:93: Exception: /usr/lib/lua/luci/ucodebridge.lua:23: /usr/lib/lua/luci/template.lua:158: Failed to load template 'tasks/embed'.
+Error while parsing template '/usr/lib/lua/luci/view/tasks/embed.htm':
+No such file or directory
+
+In error(), file [C]
+called from function run (/usr/lib/lua/luci/ucodebridge.lua:23)
+called from function [anonymous function] (/usr/lib/lua/luci/ucodebridge.lua:37)
+called from function resume ([C])
+called from function [anonymous function] (/usr/lib/lua/luci/ucodebridge.lua:20)
+called from function ((tail call))
+
+In [anonymous function](), file /usr/share/ucode/luci/runtime.uc, line 133, byte 10:
+called from function [arrow function] (/usr/share/ucode/luci/runtime.uc:183:57)
+called from function call ([C])
+called from function [anonymous function] (/usr/share/ucode/luci/runtime.uc:148:45)
+called from function [arrow function] (/usr/share/ucode/luci/dispatcher.uc:813:4)
+called from function render ([C])
+called from function render_action (/usr/share/ucode/luci/dispatcher.uc:787:24)
+called from function run_action (/usr/share/ucode/luci/dispatcher.uc:814:4)
+called from function [anonymous function] (/usr/share/ucode/luci/dispatcher.uc:1027:48)
+called from anonymous function (/www/cgi-bin/luci:39:13)
+
+` die(ex);`
+Near here --------^
+
+stack traceback:
+[C]: in function 'include'
+/usr/lib/lua/luci/template.lua:93: in function 'include'
+[string "/usr/lib/lua/luci/view/webviewdev/main.htm"]:1: in main chunk
+
+In error(), file [C]
+called from function [anonymous function] (/usr/lib/lua/luci/ucodebridge.lua:23)
+called from function ((tail call))
+In [anonymous function](), file /usr/share/ucode/luci/runtime.uc, line 148, byte 45:
+  called from function [arrow function] (/usr/share/ucode/luci/dispatcher.uc:813:4)
+  called from function render ([C])
+  called from function render_action (/usr/share/ucode/luci/dispatcher.uc:787:24)
+  called from function run_action (/usr/share/ucode/luci/dispatcher.uc:814:4)
+  called from function [anonymous function] (/usr/share/ucode/luci/dispatcher.uc:1027:48)
+  called from anonymous function (/www/cgi-bin/luci:39:13)
+
+ `        return lcall.call(modname, method, ...args);`
+  Near here ----------------------------------------^
+```
 
 
 
