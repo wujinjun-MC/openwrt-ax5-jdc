@@ -234,6 +234,7 @@
          - factory=70 MB, sysupgrade=69.5 MB
       5.  [statistics, supervisord, tailscale-community, taskplan, tcpdump, timecontrol(多选一1), timewol(多选一1), tinyfilemanager, tor, ttyd, ~~ua2f~~, unblockmusic, unbound, upnp, vlmcsd, vnstat2, wrtbwmon, xfrpc, xinetd](about:blank)
          - 启动成功
+   10. 全量测试: 看 Release
       
 2. 将默认uhttpd换成nginx (需要使用[overwrite 1](./overwrite/01-nginx-disable-https) 自动关闭HTTPS)
 3. luci其他类
