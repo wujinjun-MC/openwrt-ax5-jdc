@@ -407,7 +407,7 @@ jobs:
         rm -rf packages feeds.buildinfo version.buildinfo
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
         # Read custom message which will be displayed in release notes
-        [ -e "$OPENWRT_PATH/custom_release_notes.txt" ] && echo "CUSTOM_RELEASE_NOTES=$(sed ':a;N;$!ba;s/\n/<br\/>/g' $OPENWRT_PATH/custom_release_notes.txt)" >> $GITHUB_ENV && cp "$OPENWRT_PATH/custom_release_notes.txt" ./
+        [ -e "$OPENWRT_PATH/custom_release_notes.txt" ] && echo "CUSTOM_RELEASE_NOTES=$(sed ':a;N;$!ba;s/\n/\n          /g' $OPENWRT_PATH/custom_release_notes.txt)" >> $GITHUB_ENV && cp "$OPENWRT_PATH/custom_release_notes.txt" ./
         exit 0
 
     - name: Upload Firmware To Artifact(将固件上传到Artifact)
@@ -447,8 +447,16 @@ jobs:
           - 固件内核版本：${{ env.VERSION_KERNEL }}
           - 固件编译前最后一次➦[主源码](${{ env.REPO_URL }})更新记录:
             - ${{ env.VERSION_INFO }}
-          ### Custom Release Notes
-            - ${{ env.CUSTOM_RELEASE_NOTES || 'None' }}
+          ### 自定义发布信息
+          <details>
+
+          <summary>点击展开</summary>
+          
+          ```
+          ${{ env.CUSTOM_RELEASE_NOTES || 'None' }}
+          ```
+
+          </details>
 
     - name: Print disk usage 4
       if: always()
