@@ -452,9 +452,7 @@ jobs:
 
           <summary>点击展开</summary>
           
-          ```
           ${{ env.CUSTOM_RELEASE_NOTES || 'None' }}
-          ```
 
           </details>
 
