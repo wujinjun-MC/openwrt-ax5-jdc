@@ -6,7 +6,13 @@
 >
 > 当前分支主要用于: nn6000 v1/v2
 
-## 优化后的OpenWRT编译 for IP60xx-AX5-JDC
+> [!NOTE]
+>
+> 正在停止开发
+>
+> x86 更好玩
+
+## 优化后的OpenWRT编译 for IP60xx-* (nn6000 v1/v2, ax5-jdc)
 
 1. 修改默认管理地址
 2. actions过程 (部分灵感来源于[旧项目](https://github.com/wujinjun-MC/build-openwrt))
