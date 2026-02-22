@@ -5,6 +5,8 @@
 > AX5 JDC 原版只有 512M 运行内存，安装插件多一点就会直接爆内存; 系统分区默认只有 ~110M，需要严格控制系统大小。
 >
 > 我将逐渐暂停此机型的编译调试，转向 `nn6000 (v2)` ，敬请期待!
+>
+> 最新项目: [Actions-immortalwrt](https://github.com/wujinjun-MC/Actions-immortalwrt)
 
 ## 优化后的OpenWRT编译 for IP60xx-AX5-JDC
 
@@ -355,7 +357,7 @@
    24. luci-app-wan-mac (未测试)
    25. luci-app-xteve
    26. speedtestcli (依赖 by luci-app-systools)
-   27. vmease (依赖 by luci-app-istoredup)
+   27. vmease (依赖 by luci-app-istoredup, luci-app-pve (from my new Actions-immortalwrt))
 2. 内核不兼容
    1. kmod-oaf (依赖 by luci-app-appfilter, luci-app-oaf, PACKAGE_appfilter)
    2. bpf-headers (依赖 by ?, uspot):
